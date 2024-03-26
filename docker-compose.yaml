@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: MySecret
+      POSTGRES_DB: eccomerce_db
+    container_name: eccomerce_db
+    volumes: 
+      - ./postgres:/var/lib/postgresql/data
