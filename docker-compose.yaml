@@ -6,8 +6,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: MySecret
+      POSTGRES_PASSWORD: MySecret # NOTE:create var .env
       POSTGRES_DB: eccomerce_db
     container_name: eccomerce_db
-    volumes: 
+    volumes:  #FIXME: check other form of the use this
       - ./postgres:/var/lib/postgresql/data
