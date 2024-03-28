@@ -8,7 +8,7 @@ import v.o.r.ecommerce.common.utils.HasMap;
 import v.o.r.ecommerce.users.dto.CreateUserDto;
 import v.o.r.ecommerce.users.entities.UserEntity;
 import v.o.r.ecommerce.users.repositories.UserRepository;
-
+import java.util.List;
 
 @Service
 public class UserService implements IUserService{
@@ -26,11 +26,17 @@ public class UserService implements IUserService{
         if(createUser.password!=null && !createUser.password.isBlank()){
             String encodePassword=hasMap.encodePassword(createUser.password);
             user.setPassword(encodePassword);
+        }else{
+            user.setPassword(createUser.password);
         }
-        user.setPassword(createUser.password);
+
         user.setEmail(createUser.email);
         user.setRole(createUser.role);
-
+      
         return userRepository.save(user);
+    }
+
+    public List<UserEntity> findAll(){
+        return userRepository.findAll();
     }
 }
