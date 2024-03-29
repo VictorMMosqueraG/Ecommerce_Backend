@@ -13,7 +13,7 @@ This repositorie is for create one shopee f any products, basic one base of the 
 
 In our project, we adhere to well-defined branch naming conventions to ensure a consistent and organized workflow. Our branch names are structured to provide clear information about their purpose and context.
 
-[type]-[hu-name]-[plane]-[scope]-[responsible]
+[type]-[hu-name]-[plane]-[responsible]
 
 ### Naming Format
 
@@ -32,8 +32,8 @@ Our branch names follow the format:
 
 - **Feature Branch Example:**
 
-  - Branch Name: `OV-DCGP-38-AZ`
-  - Purpose: Development of a feature related to task DCGP-38, focusing on the FRD scope, led by the team responsible for AZ.
+  - Branch Name: `FT-OVCOM-38-AZ`
+  - Purpose: Development of a feature related to task OVCOM-38, focusing on the FRD scope, led by the team responsible for AZ.
 
 
 By adhering to these branch naming conventions, we enhance clarity and traceability within our development process.
