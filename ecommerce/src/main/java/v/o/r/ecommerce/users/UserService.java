@@ -11,6 +11,7 @@ import v.o.r.ecommerce.users.entities.UserEntity;
 import v.o.r.ecommerce.users.repositories.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -60,12 +61,18 @@ public class UserService implements IUserService{
                 throw new IllegalArgumentException("The PaginationUserDto object cannot have other fields besides 'flatten'.");
             }
 
-            return foundUser.stream().map(user -> {
-                Map<String, Object> userMap = new LinkedHashMap<>(); 
-                userMap.put("id", user.getId());
-                userMap.put("email", user.getEmail());
-                return userMap;
-            }).collect(Collectors.toList());
+            Map<String,Object> response = new LinkedHashMap<>();
+            response.put("context", "user");
+            response.put("total", foundUser.size());
+            response.put("date",foundUser.stream()
+                .map(user ->{
+                    Map<String, Object> userMap = new LinkedHashMap<>();
+                    userMap.put("id", user.getId());
+                    userMap.put("email", user.getEmail());
+                    return userMap;
+                })
+                .collect(Collectors.toList()));
+                return Collections.singletonList(response);
         }
 
         //logic for sortOrder DESC, this is default ASC
@@ -99,7 +106,6 @@ public class UserService implements IUserService{
 
         List<Map<String, Object>> resultList = new ArrayList<>();
         resultList.add(response);
-        return resultList;
-        
+        return resultList;        
     }
 }

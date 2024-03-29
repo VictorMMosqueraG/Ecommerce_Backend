@@ -1,8 +1,10 @@
 package v.o.r.ecommerce.common.interfaces.users;
 
+import java.util.UUID;
+
 public interface IUser {
-    int getId();
-    void setId(int id);
+    UUID getId();
+    void setId(UUID id);
     String getEmail();
     void setEmail(String email);
     String getPassword();
