@@ -30,7 +30,7 @@ public class UserEntity implements IUser {
     @NotNull(message = "password cannot be null")
     @NotBlank(message = "password cannot be blank")
     @Column(nullable = false)
-    private String password;
+    private String password; //FIXME: missing validation for min 7 character  
 
     @NotNull(message = "role cannot be null")
     @NotBlank(message = "role cannot be blank")
