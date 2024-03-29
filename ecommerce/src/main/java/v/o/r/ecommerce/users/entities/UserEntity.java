@@ -1,6 +1,5 @@
 package v.o.r.ecommerce.users.entities;
 
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,16 +11,15 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import v.o.r.ecommerce.common.interfaces.users.IUser;
 
 
 @Entity
 @Table(name="users",uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
-public class UserEntity implements IUser {
+public class UserEntity  {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long  id;
 
     @NotNull(message = "Email cannot be null")
     @NotBlank(message = "Email cannot be blank")
@@ -32,17 +30,17 @@ public class UserEntity implements IUser {
     @NotNull(message = "password cannot be null")
     @NotBlank(message = "password cannot be blank")
     @Column(nullable = false)
-    private String password; //FIXME: missing validation for min 7 character  
+    private String password;   
 
     @NotNull(message = "role cannot be null")
     @NotBlank(message = "role cannot be blank")
     @Column(nullable = false)
     private String role; //COMEBACK: this is array not string
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

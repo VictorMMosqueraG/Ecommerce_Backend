@@ -49,11 +49,11 @@ public class UserService implements IUserService{
 
         //Destructuring paginationUserDto
         boolean flatten = paginationUserDto != null && paginationUserDto.getFlatten();
-        int limit = paginationUserDto.getLimit() != 0 ? paginationUserDto.getLimit() : 50;
-        int offset = paginationUserDto.getOffset() != 0 ? paginationUserDto.getOffset() : 0;
-        String sortOrder = paginationUserDto.getSortOrder();
-        String email = paginationUserDto.getEmail();
-        String role = paginationUserDto.getRole();
+        int limit = paginationUserDto!=null && paginationUserDto.getLimit() != 0 ? paginationUserDto.getLimit() : 50;
+        int offset = paginationUserDto!=null && paginationUserDto.getOffset() != 0 ? paginationUserDto.getOffset() : 0;
+        String sortOrder = paginationUserDto!=null ? paginationUserDto.getSortOrder() : null;
+        String email = paginationUserDto!=null ? paginationUserDto.getEmail() : null;
+        String role = paginationUserDto!=null ? paginationUserDto.getRole():null;
 
         //validation if provided flatten
         if(flatten==true){

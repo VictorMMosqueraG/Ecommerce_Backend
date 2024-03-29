@@ -1,6 +1,5 @@
 package v.o.r.ecommerce.Products.Entity;
 
-import java.util.UUID;
 
 import v.o.r.ecommerce.common.utils.EnumUtils;
 
@@ -19,8 +18,8 @@ import jakarta.validation.constraints.NotNull;
 public class ProductsEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull(message = "name product can not be null")
     @NotBlank(message="name product can not be empty")
@@ -47,12 +46,11 @@ public class ProductsEntity {
     private String categories;
 
 
-
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
