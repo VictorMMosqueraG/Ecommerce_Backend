@@ -7,15 +7,14 @@ import org.springframework.stereotype.Service;
 import v.o.r.ecommerce.common.interfaces.products.IProductsService;
 import v.o.r.ecommerce.products.dto.ProductsDto;
 import v.o.r.ecommerce.products.entities.ProductsEntity;
-import v.o.r.ecommerce.products.repositories.ProductsRepositories;
-
+import v.o.r.ecommerce.products.repositories.ProductRepository;
 
 @Service
 public class ProductsService implements IProductsService{
 
 
     @Autowired
-    private ProductsRepositories productsRepositories;
+    private ProductRepository productRepository;
 
     public ProductsEntity save(ProductsDto createProducts) {
         ProductsEntity product = new ProductsEntity();
@@ -28,7 +27,7 @@ public class ProductsService implements IProductsService{
   
             product.setPrice(createProducts.price);
         
-        return productsRepositories.save(product);
+        return productRepository.save(product);
         
     }
     
