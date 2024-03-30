@@ -1,4 +1,4 @@
-package v.o.r.ecommerce.Products.Dto;
+package v.o.r.ecommerce.products.dto;
 
 import v.o.r.ecommerce.common.utils.EnumUtils;
 
