@@ -1,11 +1,8 @@
 package v.o.r.ecommerce.users.repositories;
 
-
-import java.util.UUID;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import v.o.r.ecommerce.users.entities.UserEntity;
 
-public interface UserRepository extends JpaRepository<UserEntity,UUID>{
+public interface UserRepository extends JpaRepository<UserEntity,Long>{
     
 }

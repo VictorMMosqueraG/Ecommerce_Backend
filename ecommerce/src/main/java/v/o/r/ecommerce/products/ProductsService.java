@@ -1,14 +1,13 @@
-package v.o.r.ecommerce.Products;
+package v.o.r.ecommerce.products;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import v.o.r.ecommerce.Products.Dto.ProductsDto;
-import v.o.r.ecommerce.Products.Entity.ProductsEntity;
-import v.o.r.ecommerce.Products.Repositories.ProductsRepositories;
 import v.o.r.ecommerce.common.interfaces.products.IProductsService;
+import v.o.r.ecommerce.products.dto.ProductsDto;
+import v.o.r.ecommerce.products.entities.ProductsEntity;
+import v.o.r.ecommerce.products.repositories.ProductsRepositories;
 
 
 @Service

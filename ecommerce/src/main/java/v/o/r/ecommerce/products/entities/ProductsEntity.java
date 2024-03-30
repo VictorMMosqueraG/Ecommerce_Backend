@@ -1,4 +1,4 @@
-package v.o.r.ecommerce.Products.Entity;
+package v.o.r.ecommerce.products.entities;
 
 
 import v.o.r.ecommerce.common.utils.EnumUtils;

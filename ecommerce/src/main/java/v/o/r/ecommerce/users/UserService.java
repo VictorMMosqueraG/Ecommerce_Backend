@@ -17,6 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Predicate;
 @Service
 public class UserService implements IUserService{
@@ -107,5 +109,15 @@ public class UserService implements IUserService{
         List<Map<String, Object>> resultList = new ArrayList<>();
         resultList.add(response);
         return resultList;        
+    }
+
+    public Optional<UserEntity> findById(Long id){
+        Optional<UserEntity> foundUser = id!=null ?  userRepository.findById(id) : null;
+        
+        if(foundUser==null || foundUser.isEmpty()){
+            throw new NoSuchElementException("User with id " + id + " not found.");
+        }
+   
+        return foundUser;
     }
 }
