@@ -1,5 +1,6 @@
 package v.o.r.ecommerce.persons.dto;
 
+
 public class CreatePerson {
     public String firstName;
     public String lastName;
