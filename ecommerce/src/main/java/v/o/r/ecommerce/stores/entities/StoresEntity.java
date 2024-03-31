@@ -9,12 +9,13 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import v.o.r.ecommerce.common.interfaces.stores.IStores;
 
 @Entity
 @Table(name = "stores", uniqueConstraints = {
             @UniqueConstraint(columnNames = { "name", "address" , "city", "department"})
 })
-public class StoresEntity {
+public class StoresEntity implements IStores {
     
     
     @Id

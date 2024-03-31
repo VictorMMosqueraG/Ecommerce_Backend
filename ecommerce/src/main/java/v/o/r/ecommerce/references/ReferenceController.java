@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import v.o.r.ecommerce.common.interfaces.references.IReferenceController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import v.o.r.ecommerce.references.dto.createReferenceDTO;
 
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 @Tag(name = "references")
 @RequestMapping("references")
-public class ReferenceController {
+public class ReferenceController implements IReferenceController {
     
     @Autowired
     ReferenceService useService;

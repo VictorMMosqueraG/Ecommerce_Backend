@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import v.o.r.ecommerce.common.interfaces.stores.IStoresService;
 import v.o.r.ecommerce.stores.dto.CreateStoreDto;
 import v.o.r.ecommerce.stores.entities.StoresEntity;
 import v.o.r.ecommerce.stores.repositories.StoreRepository;
 
 @Validated
 @Service
-public class StoresService {
+public class StoresService implements IStoresService {
     
     @Autowired
     private StoreRepository useStoreRepository;

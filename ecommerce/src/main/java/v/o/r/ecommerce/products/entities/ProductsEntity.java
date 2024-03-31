@@ -1,6 +1,7 @@
 package v.o.r.ecommerce.products.entities;
 
 
+import v.o.r.ecommerce.common.interfaces.products.IProducts;
 import v.o.r.ecommerce.common.utils.EnumUtils;
 
 import jakarta.persistence.Column;
@@ -15,7 +16,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products",uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
-public class ProductsEntity {
+public class ProductsEntity implements IProducts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
