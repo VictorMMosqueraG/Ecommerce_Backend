@@ -9,10 +9,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import v.o.r.ecommerce.common.interfaces.references.IReference;
 
 @Entity
 @Table(name="reference",uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
-public class ReferenceEntity {
+public class ReferenceEntity implements IReference{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
