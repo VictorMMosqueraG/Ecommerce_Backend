@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import v.o.r.ecommerce.common.interfaces.references.IReferenceService;
 import v.o.r.ecommerce.references.dto.createReferenceDTO;
 import v.o.r.ecommerce.references.entities.ReferenceEntity;
 import v.o.r.ecommerce.references.repositories.ReferenceRepository;
 @Validated
 @Service
-public class ReferenceService {
+public class ReferenceService implements IReferenceService {
     @Autowired
     private ReferenceRepository useRepository;
 
