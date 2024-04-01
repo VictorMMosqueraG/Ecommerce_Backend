@@ -1,5 +1,9 @@
 package v.o.r.ecommerce.common.interfaces.products;
 
+import java.util.List;
+
+
+
 public interface IProducts {
 
     Long getId();
@@ -8,8 +12,8 @@ public interface IProducts {
     void setName(String name);
     String getDescription();
     void setDescription(String description);
-    String getCategories();
-    void setCategories(String categories);
+    List<Long> getCategory();
+    void setCategory(List<Long> category);
     String getPrice();
     void setPrice(String price);
 

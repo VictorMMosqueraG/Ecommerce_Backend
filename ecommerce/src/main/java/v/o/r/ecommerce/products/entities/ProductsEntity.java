@@ -1,21 +1,25 @@
 package v.o.r.ecommerce.products.entities;
 
-
-import v.o.r.ecommerce.common.interfaces.products.IProducts;
-import v.o.r.ecommerce.common.utils.EnumUtils;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import v.o.r.ecommerce.categories.entities.CategoryEntity;
+import v.o.r.ecommerce.common.interfaces.products.IProducts;
+import v.o.r.ecommerce.common.utils.EnumUtils;
 
 @Entity
-@Table(name = "products",uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
+@Table(name = "products", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class ProductsEntity implements IProducts {
 
     @Id
@@ -23,29 +27,30 @@ public class ProductsEntity implements IProducts {
     private Long id;
 
     @NotNull(message = "name product can not be null")
-    @NotBlank(message="name product can not be empty")
-    @Column(nullable = false,unique = true)
+    @NotBlank(message = "name product can not be empty")
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotNull(message = "description product can not be null")
-    @NotBlank(message="description product can not be empty")
+    @NotBlank(message = "description product can not be empty")
     @Column(nullable = false)
     private String description;
 
-
     @NotNull(message = "price product can not be null")
-    @NotBlank(message="price product can not be empty")
+    @NotBlank(message = "price product can not be empty")
     @Column(nullable = false)
     private String price;
-    
- 
+
     private EnumUtils money;
 
-    @NotNull(message = "categories product can not be null")
-    @NotBlank(message="categories product can not be empty")
-    @Column(nullable = false)
-    private String categories;
+    @ManyToMany
+    @JoinTable(
+        name = "products_categories",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id"))
+        private List<CategoryEntity> categories;
 
+    private List<Long> category;
 
     public Long getId() {
         return id;
@@ -71,21 +76,10 @@ public class ProductsEntity implements IProducts {
         this.description = description;
     }
 
-  
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
-
     public String getPrice() {
         return price;
     }
 
-    
     public void setPrice(String price) {
 
         this.price = price;
@@ -99,13 +93,15 @@ public class ProductsEntity implements IProducts {
         this.money = money;
     }
 
-    
+    public List<Long> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<Long> category) {
+        this.category = category;
+    }
 
     
-   
+
     
-
-
-
-   
 }
