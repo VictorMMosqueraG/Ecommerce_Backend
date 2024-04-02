@@ -26,7 +26,7 @@ public class CategoryEntity implements	ICategory{
     private String name;
 
     @NotNull(message = "name category can not be null")
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String description;
 
     public Long getId() {
