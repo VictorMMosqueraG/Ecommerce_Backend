@@ -19,7 +19,7 @@ import v.o.r.ecommerce.common.interfaces.products.IProducts;
 import v.o.r.ecommerce.common.utils.EnumUtils;
 
 @Entity
-@Table(name = "products", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@Table(name = "products", uniqueConstraints = { @UniqueConstraint(columnNames = {"name"})})
 public class ProductsEntity implements IProducts {
 
     @Id
