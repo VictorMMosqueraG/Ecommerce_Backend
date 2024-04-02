@@ -19,7 +19,7 @@ import v.o.r.ecommerce.common.interfaces.products.IProducts;
 import v.o.r.ecommerce.common.utils.EnumUtils;
 
 @Entity
-@Table(name = "products", uniqueConstraints = { @UniqueConstraint(columnNames = {"name"})})
+@Table(name = "products", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class ProductsEntity implements IProducts {
 
     @Id
@@ -44,13 +44,10 @@ public class ProductsEntity implements IProducts {
     private EnumUtils money;
 
     @ManyToMany
-    @JoinTable(
-        name = "products_categories",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id"))
-        private List<CategoryEntity> categories;
-
-    private List<Long> category;
+    @JoinTable(name = "products_categories", 
+    joinColumns = @JoinColumn(name = "product_id",referencedColumnName = "id"), 
+    inverseJoinColumns = @JoinColumn(name = "category_id",referencedColumnName = "id"))
+    private List<CategoryEntity> categories;
 
     public Long getId() {
         return id;
@@ -93,15 +90,12 @@ public class ProductsEntity implements IProducts {
         this.money = money;
     }
 
-    public List<Long> getCategory() {
-        return category;
+    public List<CategoryEntity> getCategories() {
+        return categories;
     }
 
-    public void setCategory(List<Long> category) {
-        this.category = category;
+    public void setCategories(List<CategoryEntity> categories) {
+        this.categories = categories;
     }
 
-    
-
-    
 }

@@ -3,10 +3,12 @@ package v.o.r.ecommerce.products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
+
+import v.o.r.ecommerce.categories.CategoriesService;
 import v.o.r.ecommerce.categories.entities.CategoryEntity;
-import v.o.r.ecommerce.categories.repositories.CategoryRepository;
 import v.o.r.ecommerce.common.interfaces.products.IProductsService;
 import v.o.r.ecommerce.products.dto.ProductsDto;
 import v.o.r.ecommerce.products.entities.ProductsEntity;
@@ -19,7 +21,7 @@ public class ProductsService implements IProductsService {
     private ProductRepository productRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoriesService categoriesService;
 
     public ProductsEntity save(ProductsDto createProducts) {
         ProductsEntity product = new ProductsEntity();
@@ -32,17 +34,12 @@ public class ProductsService implements IProductsService {
         if (createProducts.categories.isEmpty() || createProducts.categories == null) {
             throw new IllegalArgumentException("Categories can be null or empty");
         }
-        int index = 1;
+        List<CategoryEntity> categoriesList = new ArrayList<>();
         for (int i = 0; i < createProducts.categories.size(); i++) {
-            Optional<CategoryEntity> categories = categoryRepository.findById(createProducts.categories.get(i));
-            if (!categories.isPresent()) {
-                throw new IllegalArgumentException("The value with index: " + index +
-                        " is not found in the database. Please verify if it was entered correctly.");
-            }
-            index++;
+            categoriesList.add(categoriesService.findByIdOrFail(createProducts.categories.get(i)));
         }
-        product.setCategory(createProducts.categories);
-
+       
+        product.setCategories(categoriesList);
         return productRepository.save(product);
 
     }
