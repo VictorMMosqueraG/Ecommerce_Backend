@@ -1,14 +1,20 @@
 package v.o.r.ecommerce.products.entities;
 
 
+import v.o.r.ecommerce.categories.entities.CategoryEntity;
 import v.o.r.ecommerce.common.interfaces.products.IProducts;
 import v.o.r.ecommerce.common.utils.EnumUtils;
+
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
@@ -41,10 +47,11 @@ public class ProductsEntity implements IProducts {
  
     private EnumUtils money;
 
-    @NotNull(message = "categories product can not be null")
-    @NotBlank(message="categories product can not be empty")
-    @Column(nullable = false)
-    private String categories;
+    @ManyToMany
+    @JoinTable(name = "products_categories", 
+    joinColumns = @JoinColumn(name = "product_id",referencedColumnName = "id"), 
+    inverseJoinColumns = @JoinColumn(name = "category_id",referencedColumnName = "id"))
+    private List<CategoryEntity> categories;
 
 
     public Long getId() {
@@ -71,16 +78,6 @@ public class ProductsEntity implements IProducts {
         this.description = description;
     }
 
-  
-
-    public String getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String categories) {
-        this.categories = categories;
-    }
-
     public String getPrice() {
         return price;
     }
@@ -97,6 +94,14 @@ public class ProductsEntity implements IProducts {
 
     public void setMoney(EnumUtils money) {
         this.money = money;
+    }
+
+    public List<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryEntity> categories) {
+        this.categories = categories;
     }
 
     
