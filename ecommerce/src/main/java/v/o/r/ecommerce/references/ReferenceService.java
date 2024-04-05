@@ -1,5 +1,8 @@
 package v.o.r.ecommerce.references;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +15,7 @@ import v.o.r.ecommerce.references.repositories.ReferenceRepository;
 @Service
 public class ReferenceService implements IReferenceService {
     @Autowired
-    private ReferenceRepository useRepository;
+    private ReferenceRepository referenceRepository;
 
 
     public ReferenceEntity save(createReferenceDTO createReference){
@@ -21,7 +24,19 @@ public class ReferenceService implements IReferenceService {
    
         entity.setName(createReference.name);
         entity.setDescription(createReference.description);
-        return useRepository.save(entity);
+        return referenceRepository.save(entity);
         
+    }
+    public Optional<ReferenceEntity> findByIdOrFail(Long id){
+        Optional<ReferenceEntity> foundReference=id!=null ? this.findById(id):null;
+        if (foundReference==null||foundReference.isEmpty()) {
+            throw new NoSuchElementException("the Reference: "+id+ "\n is not found.");
+        }
+        return foundReference;
+    }
+
+    public Optional<ReferenceEntity> findById(Long id){
+        Optional<ReferenceEntity> foundReference = referenceRepository.findById(id);
+        return foundReference;
     }
 }
