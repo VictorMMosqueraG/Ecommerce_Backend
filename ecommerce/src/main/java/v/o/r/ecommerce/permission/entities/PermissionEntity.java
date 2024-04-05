@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import v.o.r.ecommerce.common.interfaces.permission.IPermission;
 
 @Entity
-@Table(name = "permission",uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
+@Table(name = "permission",uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class PermissionEntity implements IPermission {
 
     @Id
