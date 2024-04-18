@@ -1,5 +1,7 @@
 package v.o.r.ecommerce.common.interfaces.roles;
 
+import v.o.r.ecommerce.permission.entities.PermissionEntity;
+
 public interface IRoles {
     public Long getId();
     public void setId(Long id);
@@ -7,6 +9,6 @@ public interface IRoles {
     public void setName(String name);
     public String getDescription();
     public void setDescription(String description);
-    public String getPermission();
-    public void setPermission(String permission);
+    public PermissionEntity getPermission();
+    public void setPermission(PermissionEntity permission);
 }

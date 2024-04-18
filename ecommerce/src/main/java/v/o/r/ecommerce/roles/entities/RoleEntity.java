@@ -5,11 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import v.o.r.ecommerce.common.interfaces.roles.IRoles;
+import v.o.r.ecommerce.permission.entities.PermissionEntity;
 
 @Entity
 @Table(name = "roles",uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
@@ -27,10 +30,11 @@ public class RoleEntity implements IRoles{
     @NotBlank(message = "description cannot be blank")
     private String description;
 
-    @NotNull(message = "permission cannot be null")
-    @NotBlank(message = "permission cannot be blank")
-    @Column(nullable =  false)
-    private String permission; //COMEBACK:missing refactor, this value is relation with table permission
+    @ManyToOne
+    @JoinColumn(name = "permission")
+    private PermissionEntity permission; 
+
+
 
     public Long getId() {
         return id;
@@ -56,13 +60,15 @@ public class RoleEntity implements IRoles{
         this.description = description;
     }
 
-    public String getPermission() {
+    public PermissionEntity getPermission() {
         return permission;
     }
 
-    public void setPermission(String permission) {
+    public void setPermission(PermissionEntity permission) {
         this.permission = permission;
     }
+
+   
 
     
 }
