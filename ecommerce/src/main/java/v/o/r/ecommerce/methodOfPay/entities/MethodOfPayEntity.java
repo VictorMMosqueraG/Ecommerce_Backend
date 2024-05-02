@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import v.o.r.ecommerce.common.interfaces.methoOfPay.IMethodOfPay;
+import v.o.r.ecommerce.common.interfaces.methodOfPay.IMethodOfPay;
 
 @Entity
 @Table(name = "method_of_pay")
