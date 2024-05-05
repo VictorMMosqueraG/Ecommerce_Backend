@@ -40,9 +40,23 @@ public class ProductsController implements IProductsController{
     
     @Operation(summary = "Save a products")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Product created"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+        @ApiResponse(
+            responseCode = "201", 
+            description = "Product created",
+            content = @Content(mediaType = "application/json")    
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Bad request",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"BAD_REQUEST\", \"error\": \"Bad request\", \"message\": \"Invalid input data\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "500", 
+            description = "Internal Server Error",
+            content = @Content(mediaType = "application/json", 
+            schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
+        )
     })
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody ProductsDto createProduct){
@@ -56,10 +70,25 @@ public class ProductsController implements IProductsController{
 
     @Operation(summary = "Found a product")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Found product", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ProductsEntity.class))),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+        @ApiResponse(
+            responseCode = "200", 
+            description = "Found product", 
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ProductsEntity.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Bad request",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"BAD_REQUEST\", \"error\": \"Bad request\", \"message\": \"Invalid input data\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "500", 
+            description = "Internal Server Error",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
+        )
     })
     @GetMapping ("/find")
     public ResponseEntity<?> find(@ModelAttribute PaginationProductDto paginationProductDto){
