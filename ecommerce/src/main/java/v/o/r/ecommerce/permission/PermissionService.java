@@ -29,7 +29,7 @@ public class PermissionService implements IPermissionService{
     public Optional<PermissionEntity> findByIdOrFail(Long id){
         Optional<PermissionEntity> foundPermission=id!=null ? this.findById(id):null;
         if (foundPermission==null || foundPermission.isEmpty()) {
-            throw new NoSuchElementException("the Permission: "+id+ "\n is not found.");
+            throw new NoSuchElementException("the Permission with id "+id+ " is not found.");
         }
        
         return foundPermission;
