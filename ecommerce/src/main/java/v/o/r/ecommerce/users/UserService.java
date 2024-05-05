@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import v.o.r.ecommerce.common.interfaces.users.IUserService;
 import v.o.r.ecommerce.common.utils.HasMap;
+import v.o.r.ecommerce.roles.RoleService;
+import v.o.r.ecommerce.roles.entities.RoleEntity;
 import v.o.r.ecommerce.users.dto.CreateUserDto;
 import v.o.r.ecommerce.users.dto.PaginationUserDto;
 import v.o.r.ecommerce.users.entities.UserEntity;
@@ -29,6 +31,9 @@ public class UserService implements IUserService{
     @Autowired
     private HasMap hasMap;
 
+    @Autowired
+    private RoleService roleService;
+
     public UserEntity save(CreateUserDto createUser){
         UserEntity user = new UserEntity();
 
@@ -40,9 +45,11 @@ public class UserService implements IUserService{
             user.setPassword(createUser.password);
         }
 
+        //Find role, if not exist return error
+        Optional<RoleEntity> foundRole = roleService.findRoleByIdOrFail(createUser.role);
+        user.setRole(foundRole.get());
         user.setEmail(createUser.email);
-        user.setRole(createUser.role);
-      
+
         return userRepository.save(user);
     }
 
@@ -86,19 +93,20 @@ public class UserService implements IUserService{
 
         //filter based on email or role if provided
         Predicate<UserEntity> emailFilter = user -> email == null || user.getEmail().toLowerCase().contains(email.toLowerCase());
-        Predicate<UserEntity> roleFilter = user -> role == null || user.getRole().toLowerCase().contains(role.toLowerCase());
+        Predicate<UserEntity> roleFilter = user -> role == null || user.getRole().getName().toLowerCase().contains(role.toLowerCase());
         
         //iterates from foundUser and extract id,email and roles
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("context", "user");
         response.put("total", foundUser.size());
         response.put("data", foundUser.stream()
-            .filter(emailFilter.and(roleFilter))
+        .filter(emailFilter.and(roleFilter))
             .map(user -> {
                 Map<String, Object> userMap = new LinkedHashMap<>(); 
                 userMap.put("id", user.getId());
                 userMap.put("email", user.getEmail());
-                userMap.put("role", user.getRole());
+                userMap.put("roleId", user.getRole().getId());
+                userMap.put("roleName", user.getRole().getName());
                 return userMap;
             })
             .sorted(sort)
