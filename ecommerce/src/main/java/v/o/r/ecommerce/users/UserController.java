@@ -3,6 +3,7 @@ package v.o.r.ecommerce.users;
 import java.util.List;
 import java.util.Map;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,8 +90,8 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping ("/find")
-    public ResponseEntity<?> find(@ModelAttribute PaginationUserDto paginationUserDto) {
+    @GetMapping("/find")
+    public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationUserDto paginationUserDto) {
         try {
             List<Map<String, Object>> foundUser = userService.find(paginationUserDto);
             return ResponseEntity.status(HttpStatus.OK).body(foundUser);
@@ -98,5 +99,6 @@ public class UserController implements IUserController{
             return BaseServiceError.handleException(e);
         }
     }
+    
     
 }

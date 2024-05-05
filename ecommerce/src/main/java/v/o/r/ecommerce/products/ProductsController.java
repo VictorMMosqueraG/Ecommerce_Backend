@@ -3,6 +3,7 @@ package v.o.r.ecommerce.products;
 import java.util.List;
 import java.util.Map;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,7 +92,7 @@ public class ProductsController implements IProductsController{
         )
     })
     @GetMapping ("/find")
-    public ResponseEntity<?> find(@ModelAttribute PaginationProductDto paginationProductDto){
+    public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationProductDto paginationProductDto){
         try {
             List<Map<String,Object>> foundProduct = productsService.find(paginationProductDto);
             return ResponseEntity.status(HttpStatus.OK).body(foundProduct);

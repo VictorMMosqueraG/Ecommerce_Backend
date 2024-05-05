@@ -3,6 +3,7 @@ package v.o.r.ecommerce.persons;
 import java.util.List;
 import java.util.Map;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,7 +91,7 @@ public class PersonController implements IPersonController{
         )
     })
     @GetMapping("/find")
-    public ResponseEntity<?> find(@ModelAttribute PaginationPersonDto paginationPersonDto){
+    public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationPersonDto paginationPersonDto){
         try {
             List<Map<String,Object>> foundPerson = personService.find(paginationPersonDto);
             return ResponseEntity.status(HttpStatus.OK).body(foundPerson);

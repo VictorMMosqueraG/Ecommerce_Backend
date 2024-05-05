@@ -1,14 +1,30 @@
 package v.o.r.ecommerce.products.dto;
 
+import io.swagger.v3.oas.annotations.Parameter;
 
 public class PaginationProductDto {
+
+    @Parameter(description = "Indicates whether the response should be flattened, example = True")
     private boolean flatten;
+
+    @Parameter(description = "Maximum number of results to return, example = 10")
     private int limit;
+
+    @Parameter(description = "Index of the first result, example = 0")
     private int offset;
+
+    @Parameter(description = "Sort order of the result, example = ASC")
     private String sortOrder;
+
+    @Parameter(description = "Filter by name products, example = Short")
     private String name;
+
+    @Parameter(description = "Filter by price, example = 100,000")
     private String price;
+
+    @Parameter(description = "Filter by category, example = Sport")
     private String nameCategories;
+    
     public boolean isFlatten() {
         return flatten;
     }
