@@ -19,7 +19,6 @@ import v.o.r.ecommerce.common.interfaces.products.IProductsController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import v.o.r.ecommerce.products.dto.PaginationProductDto;
 import v.o.r.ecommerce.products.dto.ProductsDto;
-import v.o.r.ecommerce.products.entities.ProductsEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -75,8 +74,7 @@ public class ProductsController implements IProductsController{
             responseCode = "200", 
             description = "Found product", 
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ProductsEntity.class)
-            )
+                schema = @Schema(example = "[\n{\n  \"context\": \"products\",\n  \"total\": 0,\n  \"data\": []\n}\n]"))
         ),
         @ApiResponse(
             responseCode = "400", 

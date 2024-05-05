@@ -21,7 +21,6 @@ import v.o.r.ecommerce.common.interfaces.persons.IPersonController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import v.o.r.ecommerce.persons.dto.CreatePerson;
 import v.o.r.ecommerce.persons.dto.PaginationPersonDto;
-import v.o.r.ecommerce.persons.entities.PersonEntity;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +74,8 @@ public class PersonController implements IPersonController{
         @ApiResponse(
             responseCode = "200", 
             description = "Found person", 
-            content = @Content(mediaType = "application/json",schema = @Schema(implementation = PersonEntity.class))
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "[\n{\n  \"context\": \"person\",\n  \"total\": 0,\n  \"data\": []\n}\n]"))
         ),
         @ApiResponse(
             responseCode = "400", 
