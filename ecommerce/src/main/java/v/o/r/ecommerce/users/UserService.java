@@ -111,13 +111,18 @@ public class UserService implements IUserService{
         return resultList;        
     }
 
-    public Optional<UserEntity> findById(Long id){
-        Optional<UserEntity> foundUser = id!=null ?  userRepository.findById(id) : null;
+    public Optional<UserEntity> findByIdOrFail(Long id){
+        Optional<UserEntity> foundUser = id!=null ?  this.findById(id) : null;
         
         if(foundUser==null || foundUser.isEmpty()){
             throw new NoSuchElementException("User with id " + id + " not found.");
         }
    
+        return foundUser;
+    }
+
+    public Optional<UserEntity> findById(Long id){
+        Optional<UserEntity> foundUser = userRepository.findById(id);
         return foundUser;
     }
 }

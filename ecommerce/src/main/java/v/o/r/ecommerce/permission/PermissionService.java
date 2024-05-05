@@ -1,5 +1,8 @@
 package v.o.r.ecommerce.permission;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +25,18 @@ public class PermissionService implements IPermissionService{
 
         permissionRepository.save(permission);
         return permission;
+    }
+    public Optional<PermissionEntity> findByIdOrFail(Long id){
+        Optional<PermissionEntity> foundPermission=id!=null ? this.findById(id):null;
+        if (foundPermission==null || foundPermission.isEmpty()) {
+            throw new NoSuchElementException("the Permission: "+id+ "\n is not found.");
+        }
+       
+        return foundPermission;
+    }
+    
+    public Optional<PermissionEntity> findById(Long id){
+        Optional<PermissionEntity> foundPermission = permissionRepository.findById(id);
+        return foundPermission;
     }
 }

@@ -1,53 +1,47 @@
-package v.o.r.ecommerce.stores;
-
+package v.o.r.ecommerce.roles;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-
-import v.o.r.ecommerce.common.interfaces.stores.IStoreController;
-import v.o.r.ecommerce.common.service.BaseServiceError;
-import v.o.r.ecommerce.stores.dto.CreateStoreDto;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import v.o.r.ecommerce.common.interfaces.roles.IRoleController;
+import v.o.r.ecommerce.common.service.BaseServiceError;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import v.o.r.ecommerce.roles.dto.CreateRoleDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Validated
 @RestController
-@Tag(name = "stores")
-@RequestMapping("stores")
-public class StoresController implements IStoreController{
+@Tag(name = "roles")
+@RequestMapping("roles")
+public class RoleController implements IRoleController{
 
     @Autowired
-    private StoresService storeService;
+    private RoleService roleService;
 
-     @Operation(summary = "Save a store")
+    
+    @Operation(summary = "Save a role")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "store created"),
+        @ApiResponse(responseCode = "201", description = "role created"),
         @ApiResponse(responseCode = "400", description = "Bad request"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
-
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody CreateStoreDto createStore) {
+    public ResponseEntity<?> save (@RequestBody CreateRoleDto createRoleDto){
         try {
-            storeService.save(createStore);
+            roleService.save(createRoleDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-
         } catch (Exception e) {
             return BaseServiceError.handleException(e);
         }
-        
     }
-    
 }
