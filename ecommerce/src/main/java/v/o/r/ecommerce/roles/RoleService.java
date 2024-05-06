@@ -1,5 +1,8 @@
 package v.o.r.ecommerce.roles;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +29,19 @@ public class RoleService implements IRoleService {
         role.setPermission(permissionService.findByIdOrFail(createRoleDto.permission).get());
 
         roleRepository.save(role);
+    }
+
+    public Optional<RoleEntity> findRoleById(Long id){
+        return roleRepository.findById(id);
+    }
+
+    public Optional<RoleEntity> findRoleByIdOrFail(Long id){
+        Optional<RoleEntity> foundRole = id!=null ? findRoleById(id):null;
+
+        if(foundRole==null || foundRole.isEmpty()){
+            throw new NoSuchElementException("Role with id " + id + " not found.");
+        }
+
+        return foundRole;
     }
 }

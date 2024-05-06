@@ -8,7 +8,6 @@ public class CreateUserDto {
     
     @Schema(example = "MySecretPassword")
     public String password;
-    
     @Schema(example = "1")
-    public String role;
+    public Long role;
 }
