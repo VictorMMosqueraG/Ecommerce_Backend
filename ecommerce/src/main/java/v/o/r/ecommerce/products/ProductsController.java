@@ -3,6 +3,7 @@ package v.o.r.ecommerce.products;
 import java.util.List;
 import java.util.Map;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,6 @@ import v.o.r.ecommerce.common.interfaces.products.IProductsController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import v.o.r.ecommerce.products.dto.PaginationProductDto;
 import v.o.r.ecommerce.products.dto.ProductsDto;
-import v.o.r.ecommerce.products.entities.ProductsEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,9 +40,23 @@ public class ProductsController implements IProductsController{
     
     @Operation(summary = "Save a products")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Product created"),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+        @ApiResponse(
+            responseCode = "201", 
+            description = "Product created",
+            content = @Content(mediaType = "application/json")    
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Bad request",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"BAD_REQUEST\", \"error\": \"Bad request\", \"message\": \"Invalid input data\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "500", 
+            description = "Internal Server Error",
+            content = @Content(mediaType = "application/json", 
+            schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
+        )
     })
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody ProductsDto createProduct){
@@ -56,13 +70,27 @@ public class ProductsController implements IProductsController{
 
     @Operation(summary = "Found a product")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Found product", content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ProductsEntity.class))),
-        @ApiResponse(responseCode = "400", description = "Bad request"),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+        @ApiResponse(
+            responseCode = "200", 
+            description = "Found product", 
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(example = "[\n{\n  \"context\": \"products\",\n  \"total\": 0,\n  \"data\": []\n}\n]"))
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Bad request",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"BAD_REQUEST\", \"error\": \"Bad request\", \"message\": \"Invalid input data\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "500", 
+            description = "Internal Server Error",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
+        )
     })
     @GetMapping ("/find")
-    public ResponseEntity<?> find(@ModelAttribute PaginationProductDto paginationProductDto){
+    public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationProductDto paginationProductDto){
         try {
             List<Map<String,Object>> foundProduct = productsService.find(paginationProductDto);
             return ResponseEntity.status(HttpStatus.OK).body(foundProduct);
