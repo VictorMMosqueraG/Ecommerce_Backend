@@ -66,7 +66,7 @@ public class UserService implements IUserService{
             Map<String,Object> response = new LinkedHashMap<>();
             response.put("context", "user");
             response.put("total", foundUser.size());
-            response.put("date",foundUser.stream()
+            response.put("data",foundUser.stream()
                 .map(user ->{
                     Map<String, Object> userMap = new LinkedHashMap<>();
                     userMap.put("id", user.getId());

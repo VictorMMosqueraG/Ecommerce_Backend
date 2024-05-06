@@ -1,4 +1,4 @@
-package v.o.r.ecommerce.common.interfaces.methoOfPay;
+package v.o.r.ecommerce.common.interfaces.methodOfPay;
 
 public interface IMethodOfPay {
     public Long getId();
