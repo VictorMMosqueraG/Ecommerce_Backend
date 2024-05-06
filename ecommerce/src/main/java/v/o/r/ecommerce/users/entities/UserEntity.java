@@ -6,15 +6,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import v.o.r.ecommerce.roles.entities.RoleEntity;
 
 
 @Entity
-@Table(name="users",uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
+@Table(name="users")
 public class UserEntity  {
     
     @Id
@@ -32,10 +34,9 @@ public class UserEntity  {
     @Column(nullable = false)
     private String password;   
 
-    @NotNull(message = "role cannot be null")
-    @NotBlank(message = "role cannot be blank")
-    @Column(nullable = false)
-    private String role; //COMEBACK: this is array not string
+    @ManyToOne
+    @JoinColumn(name = "role")
+    private RoleEntity role; 
 
     public Long getId() {
         return id;
@@ -57,13 +58,14 @@ public class UserEntity  {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getRole() {
+    public RoleEntity getRole() {
         return role;
     }
-    public void setRole(String role) {
+    public void setRole(RoleEntity role) {
         this.role = role;
     }
+
+    
 
     
 }
