@@ -1,5 +1,8 @@
 package v.o.r.ecommerce.persons;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +17,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import v.o.r.ecommerce.common.interfaces.persons.IPersonController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import v.o.r.ecommerce.persons.dto.CreatePerson;
+import v.o.r.ecommerce.persons.dto.PaginationPersonDto;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -39,6 +47,16 @@ public class PersonController implements IPersonController{
         try {
          personService.save(createPerson);
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return BaseServiceError.handleException(e);
+        }
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> find(@ModelAttribute PaginationPersonDto paginationPersonDto){
+        try {
+            List<Map<String,Object>> foundPerson = personService.find(paginationPersonDto);
+            return ResponseEntity.status(HttpStatus.OK).body(foundPerson);
         } catch (Exception e) {
             return BaseServiceError.handleException(e);
         }

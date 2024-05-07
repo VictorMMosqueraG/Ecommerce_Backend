@@ -28,17 +28,17 @@ public class InventoryEntity implements IInventory{
     @NotNull(message = "stocks cannot be null")
     private Integer stocks;
 
-    
+    //COMEBACK fix the unique constrains
     @ManyToOne
-    @JoinColumn(name = "products",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "products",referencedColumnName = "id")
     private ProductsEntity product;
 
     @ManyToOne
-    @JoinColumn(name = "reference",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "reference",referencedColumnName = "id")
     private ReferenceEntity reference;
 
     @ManyToOne
-    @JoinColumn(name = "stores",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "stores",referencedColumnName = "id")
     private StoresEntity store;
 
     public Long getId() {
