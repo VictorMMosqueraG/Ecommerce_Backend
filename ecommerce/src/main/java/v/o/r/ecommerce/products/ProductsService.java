@@ -135,17 +135,18 @@ public class ProductsService implements IProductsService {
         resultList.add(response);
         return resultList;
     }
-        public Optional<ProductsEntity> findByIdOrFail(Long id){
-        Optional<ProductsEntity> foundProduct=id!=null ? this.findById(id):null;
-        if (foundProduct==null || foundProduct.isEmpty()) {
-            throw new NoSuchElementException("the Store: "+id+ "\n is not found.");
-        }
-       
-        return foundProduct;
-    }
-    
+
     public Optional<ProductsEntity> findById(Long id){
-        Optional<ProductsEntity> foundProduct = productRepository.findById(id);
+        return productRepository.findById(id);
+    }
+
+    public Optional<ProductsEntity> findByIdOrFail(Long id){
+        Optional<ProductsEntity> foundProduct = id!=null ? findById(id):null;
+
+        if(foundProduct==null || foundProduct.isEmpty()){
+            throw new NoSuchElementException("Product with id " + id + " not found.");
+        }
+
         return foundProduct;
     }
 }
