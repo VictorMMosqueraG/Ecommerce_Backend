@@ -44,7 +44,6 @@ public Optional<StoresEntity> findByIdOrFail(Long id){
 }
 
 public Optional<StoresEntity> findById(Long id){
-    Optional<StoresEntity> idStore = useStoreRepository.findById(id);
-    return idStore;
+    return useStoreRepository.findById(id);
 }
 }
