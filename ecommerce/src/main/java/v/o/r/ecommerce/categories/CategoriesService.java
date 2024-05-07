@@ -26,14 +26,13 @@ public class CategoriesService implements ICategoryService {
     public CategoryEntity findByIdOrFail(long id){
         Optional<CategoryEntity> product_category = this.findById(id);
         if (!product_category.isPresent()) {
-            throw new IllegalArgumentException("the category id: "+id+ "\n is not registered in the database. Please verify.");
+            throw new IllegalArgumentException("the category id: "+id+ " is not found.");
         }
         CategoryEntity newLink = product_category.get();
         return newLink;
     }
 
     public Optional<CategoryEntity> findById(long id){
-        Optional<CategoryEntity> product_category = categoryRepository.findById(id);
-        return product_category;
+        return categoryRepository.findById(id);
     }
 }
