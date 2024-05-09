@@ -1,5 +1,8 @@
 package v.o.r.ecommerce.stores;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +30,19 @@ public class StoresService implements IStoresService {
        
         return useStoreRepository.save(store);
         
+    }
+     public Optional<StoresEntity> findById(Long id){
+        return useStoreRepository.findById(id);
+    }
+
+    public Optional<StoresEntity> findByIdOrFail(Long id){
+        Optional<StoresEntity> newLink = id!=null ? findById(id):null;
+
+        if(newLink==null || newLink.isEmpty()){
+            throw new NoSuchElementException("Store with id " + id + " not found.");
+        }
+
+        return newLink;
     }
 
 }

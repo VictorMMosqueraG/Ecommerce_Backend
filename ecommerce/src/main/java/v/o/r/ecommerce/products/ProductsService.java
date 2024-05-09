@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -133,5 +134,18 @@ public class ProductsService implements IProductsService {
         List<Map<String, Object>> resultList = new ArrayList<>();
         resultList.add(response);
         return resultList;
+    }
+    public Optional<ProductsEntity> findById(Long id){
+        return productRepository.findById(id);
+    }
+
+    public Optional<ProductsEntity> findByIdOrFail(Long id){
+        Optional<ProductsEntity> newLink = id!=null ? findById(id):null;
+
+        if(newLink==null || newLink.isEmpty()){
+            throw new NoSuchElementException("Product with id " + id + " not found.");
+        }
+
+        return newLink;
     }
 }
