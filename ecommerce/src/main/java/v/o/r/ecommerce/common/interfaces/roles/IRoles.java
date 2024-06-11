@@ -1,5 +1,7 @@
 package v.o.r.ecommerce.common.interfaces.roles;
 
+import java.util.List;
+
 import v.o.r.ecommerce.permission.entities.PermissionEntity;
 
 public interface IRoles {
@@ -9,6 +11,6 @@ public interface IRoles {
     public void setName(String name);
     public String getDescription();
     public void setDescription(String description);
-    public PermissionEntity getPermission();
-    public void setPermission(PermissionEntity permission);
+    public List<PermissionEntity> getPermission();
+    public void setPermission(List<PermissionEntity> permission);
 }

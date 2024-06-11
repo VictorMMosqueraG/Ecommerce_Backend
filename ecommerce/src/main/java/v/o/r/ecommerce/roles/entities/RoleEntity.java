@@ -1,12 +1,15 @@
 package v.o.r.ecommerce.roles.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
@@ -30,11 +33,11 @@ public class RoleEntity implements IRoles{
     @NotBlank(message = "description cannot be blank")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "permission")
-    private PermissionEntity permission; 
-
-
+    @ManyToMany
+    @JoinTable(name = "role_permissions",
+    joinColumns = @JoinColumn(name="role_id",referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "permission_id",referencedColumnName = "id"))
+    private List<PermissionEntity> permission;
 
     public Long getId() {
         return id;
@@ -60,15 +63,12 @@ public class RoleEntity implements IRoles{
         this.description = description;
     }
 
-    public PermissionEntity getPermission() {
+    public List<PermissionEntity> getPermission() {
         return permission;
     }
 
-    public void setPermission(PermissionEntity permission) {
+    public void setPermission(List<PermissionEntity> permission) {
         this.permission = permission;
     }
-
-   
-
     
 }

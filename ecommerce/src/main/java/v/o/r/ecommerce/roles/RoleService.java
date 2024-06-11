@@ -1,5 +1,7 @@
 package v.o.r.ecommerce.roles;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import v.o.r.ecommerce.common.interfaces.roles.IRoleService;
 import v.o.r.ecommerce.permission.PermissionService;
+import v.o.r.ecommerce.permission.entities.PermissionEntity;
 import v.o.r.ecommerce.roles.dto.CreateRoleDto;
 import v.o.r.ecommerce.roles.entities.RoleEntity;
 import v.o.r.ecommerce.roles.repositories.RoleRepository;
@@ -26,7 +29,15 @@ public class RoleService implements IRoleService {
 
         role.setName(createRoleDto.name);
         role.setDescription(createRoleDto.description);
-        role.setPermission(permissionService.findByIdOrFail(createRoleDto.permission).get());
+
+       //NOTE: valid if the permission send if exist
+        List<PermissionEntity> findPermissions = new ArrayList<>();
+        createRoleDto.permission.stream()
+            .map(permission -> permissionService.findByIdOrFail(permission))
+            .distinct()//ignore item duplicate
+            .forEach(permission -> permission.ifPresent(findPermissions::add));
+   
+        role.setPermission(findPermissions);
 
         roleRepository.save(role);
     }
