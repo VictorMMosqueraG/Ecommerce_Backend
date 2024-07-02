@@ -69,6 +69,28 @@ public class RoleController implements IRoleController{
         }
     }
 
+
+    @Operation(summary = "Found a role")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200", 
+            description = "Found user", 
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "[\n{\n  \"context\": \"user\",\n  \"total\": 0,\n  \"data\": []\n}\n]"))
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Bad request",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"BAD_REQUEST\", \"error\": \"Bad request\", \"message\": \"Invalid input data\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "500", 
+            description = "Internal Server Error",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
+        )
+    })
     @GetMapping("/find")
     public ResponseEntity<?> find (@ParameterObject @ModelAttribute PaginationRoleDto paginationRoleDto) {
         try {
