@@ -25,7 +25,7 @@ public class CategoriesService implements ICategoryService {
     }
     public CategoryEntity findByIdOrFail(long id){
         Optional<CategoryEntity> product_category = this.findById(id);
-        if (!product_category.isPresent()) {
+        if (product_category.isEmpty()) {
             throw new IllegalArgumentException("the category id: "+id+ "\n is not registered in the database. Please verify.");
         }
         CategoryEntity newLink = product_category.get();

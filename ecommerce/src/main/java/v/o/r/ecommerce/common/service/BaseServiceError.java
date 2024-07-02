@@ -19,8 +19,10 @@ public class BaseServiceError {
 
     public static ResponseEntity<?> handleException(Exception e) {
 
+        String errorMessage = e.getMessage();
+
         if (e instanceof DataIntegrityViolationException) {
-            String errorMessage = e.getMessage();
+         
             String detail = errorMessage.substring(errorMessage.indexOf("Key"), errorMessage.indexOf("]") - 1).trim();
 
             // NOTE: valid if already exist
@@ -31,9 +33,7 @@ public class BaseServiceError {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Error DataIntegrityViolationException:" + detail);
 
-        } else if (e instanceof ConstraintViolationException) {
-            ConstraintViolationException constraintViolationException = (ConstraintViolationException) e;
-            String errorMessage = "";
+        } else if (e instanceof ConstraintViolationException constraintViolationException) {
 
             for (ConstraintViolation<?> violation : constraintViolationException.getConstraintViolations()) {
                 errorMessage = violation.getMessage();
