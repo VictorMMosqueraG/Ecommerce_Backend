@@ -1,5 +1,9 @@
 package v.o.r.ecommerce.roles;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +19,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import v.o.r.ecommerce.roles.dto.CreateRoleDto;
+import v.o.r.ecommerce.roles.dto.PaginationRoleDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 
 
 @Validated
@@ -60,4 +68,15 @@ public class RoleController implements IRoleController{
             return BaseServiceError.handleException(e);
         }
     }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> find (@ParameterObject @ModelAttribute PaginationRoleDto paginationRoleDto) {
+        try {
+            List<Map<String, Object>> foundRole = roleService.find(paginationRoleDto);
+            return ResponseEntity.status(HttpStatus.OK).body(foundRole);
+        } catch (Exception e) {
+            return BaseServiceError.handleException(e);
+        }
+    }
+    
 }
