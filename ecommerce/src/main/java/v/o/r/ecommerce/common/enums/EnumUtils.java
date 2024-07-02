@@ -1,4 +1,4 @@
-package v.o.r.ecommerce.common.utils;
+package v.o.r.ecommerce.common.enums;
 
 public enum EnumUtils {
     COP,

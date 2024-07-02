@@ -2,8 +2,8 @@ package v.o.r.ecommerce.products.entities;
 
 
 import v.o.r.ecommerce.categories.entities.CategoryEntity;
+import v.o.r.ecommerce.common.enums.EnumUtils;
 import v.o.r.ecommerce.common.interfaces.products.IProducts;
-import v.o.r.ecommerce.common.utils.EnumUtils;
 
 import java.util.List;
 
