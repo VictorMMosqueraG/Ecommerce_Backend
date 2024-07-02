@@ -32,3 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 postgres/
+
+## Enviroments ##
+ecommerce/src/main/resources/application-dev.properties
+ecommerce/src/main/resources/application-stage.properties
+ecommerce/src/main/resources/application-prod.properties
