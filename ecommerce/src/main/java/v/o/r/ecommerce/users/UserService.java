@@ -119,6 +119,11 @@ public class UserService implements IUserService{
         return resultList;        
     }
 
+    public Optional<UserEntity> findDetail(Long id){
+        return this.findByIdOrFail(id);
+    }
+
+    //NOTE: Base methods
     public Optional<UserEntity> findByIdOrFail(Long id){
         Optional<UserEntity> foundUser = id!=null ?  this.findById(id) : null;
         
