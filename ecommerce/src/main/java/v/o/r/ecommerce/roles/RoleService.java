@@ -50,20 +50,6 @@ public class RoleService implements IRoleService {
         roleRepository.save(role);
     }
 
-    public Optional<RoleEntity> findRoleById(Long id){
-        return roleRepository.findById(id);
-    }
-
-    public Optional<RoleEntity> findRoleByIdOrFail(Long id){
-        Optional<RoleEntity> foundRole = id!=null ? findRoleById(id):null;
-
-        if(foundRole==null || foundRole.isEmpty()){
-            throw new NoSuchElementException("Role with id " + id + " not found.");
-        }
-
-        return foundRole;
-    }
-
     public List<Map<String,Object>> find(PaginationRoleDto paginationRoleDto){
 
         //find all data 
@@ -134,4 +120,22 @@ public class RoleService implements IRoleService {
         return resultList;        
     }
 
+    public Optional<RoleEntity> findDetail(Long id){
+        return this.findRoleByIdOrFail(id);
+    }
+    //NOTE: Base methods
+
+    public Optional<RoleEntity> findRoleById(Long id){
+        return roleRepository.findById(id);
+    }
+
+    public Optional<RoleEntity> findRoleByIdOrFail(Long id){
+        Optional<RoleEntity> foundRole = id!=null ? findRoleById(id):null;
+
+        if(foundRole==null || foundRole.isEmpty()){
+            throw new NoSuchElementException("Role with id " + id + " not found.");
+        }
+
+        return foundRole;
+    }
 }
