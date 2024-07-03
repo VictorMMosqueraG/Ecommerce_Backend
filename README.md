@@ -8,6 +8,7 @@ This repositorie is for create one shopee f any products, basic one base of the 
 
 - [Branch naming Convention](#branch-naming-conventions)
 - [Backend Setup and Dependencies](#backend-setup-and-dependencies)
+- [Environment](#environments)
 - [Documentation swagger](#documentation-swagger)
 
 ## Branch Naming Conventions
@@ -88,8 +89,15 @@ To set up and run this project, follow these steps:
       ```
 For detailed instructions on running the backend in specific environments (development, staging, or production), please consult the dedicated sections within this documentation. Please be aware that instructions for staging and production environments will be included once they become available, and they will not rely on local Docker for deployment.
 
+## Environments
+
+For this project it is using environments `dev`, `stage` and `prod`, copy a data from `application.properties` and create new file with the name `application-dev.properties`
+
+`NOTE:` The file `application-dev,properties` it is change dev for stage or prod example application-stage.properties or application-prod.properties (you can have the 3 files with this names) and the file original application.properties changed value the spring.profiles.active=dev a spring.profile.active=stage or spring.profiles.active=prod
+
 ## Documentation Swagger
 
 ```
 http://localhost:8080/swagger-ui/index.html#/
 ```
+
