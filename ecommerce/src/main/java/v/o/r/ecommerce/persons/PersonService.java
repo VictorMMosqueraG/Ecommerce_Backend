@@ -46,7 +46,7 @@ public class PersonService implements IPersonService{
         return personRepository.save(person);
     }
 
-    public java.util.List<Map<String, Object>> find(PaginationPersonDto paginationPerson){
+    public List<Map<String, Object>> find(PaginationPersonDto paginationPerson){
         List<PersonEntity> foundPerson= personRepository.findAll();
 
         boolean flatten = paginationPerson!=null && paginationPerson.getFlatten();
