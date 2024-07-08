@@ -9,6 +9,7 @@ import v.o.r.ecommerce.roles.RoleService;
 import v.o.r.ecommerce.roles.entities.RoleEntity;
 import v.o.r.ecommerce.users.dto.CreateUserDto;
 import v.o.r.ecommerce.users.dto.PaginationUserDto;
+import v.o.r.ecommerce.users.dto.UpdateUserDto;
 import v.o.r.ecommerce.users.entities.UserEntity;
 import v.o.r.ecommerce.users.repositories.UserRepository;
 
@@ -121,6 +122,32 @@ public class UserService implements IUserService{
 
     public Optional<UserEntity> findDetail(Long id){
         return this.findByIdOrFail(id);
+    }
+
+    public UserEntity update(Long id, UpdateUserDto  updateUserDto){
+        //find user or throw exception
+        Optional<UserEntity> foundUser = this.findByIdOrFail(id);
+
+        //create instance object 
+        UserEntity update = foundUser.get();
+
+        //valid if provide all data or not
+        String email = updateUserDto.email != null ? updateUserDto.email:update.getEmail();
+        update.setEmail(email);//send data
+
+        //valid if provide password and encode
+        if(updateUserDto.password!=null && !updateUserDto.password.isBlank()){
+            String encodePassword=hasMap.encodePassword(updateUserDto.password);
+            update.setPassword(encodePassword);//send data
+        }
+
+        //valid if provide role and it`s find , if not exist return error
+        if(updateUserDto.role!=null){
+            Optional<RoleEntity> foundRole = roleService.findRoleByIdOrFail(updateUserDto.role);
+            update.setRole(foundRole.get());//send data
+        }
+
+        return userRepository.save(update);
     }
 
     //NOTE: Base methods
