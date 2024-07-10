@@ -87,6 +87,7 @@ public class BaseServiceError {
         return ResponseError("Unexpected Error", 500, CodeError.INTERNAL_SERVER_ERROR);
     }
 
+    //NOTE: this method is for return error with format Json
     public static ResponseEntity<?> ResponseError(String message, Integer status, CodeError code) {
         Map<String, Object> errorMap = new HashMap<>();
         errorMap.put("message", message);
@@ -96,7 +97,9 @@ public class BaseServiceError {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(errorMap);
-            return ResponseEntity.status(status).body(json);
+            return ResponseEntity.status(status)
+                .header("Content-Type", "application/json")
+                .body(json);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error converting to JSON: " + ex.getMessage());

@@ -12,8 +12,17 @@ import jakarta.validation.constraints.NotNull;
 import v.o.r.ecommerce.common.interfaces.stores.IStores;
 
 @Entity
-@Table(name = "stores", uniqueConstraints = {
-            @UniqueConstraint(columnNames = { "name", "address" , "city", "department"})
+@Table(
+    name = "stores", 
+    uniqueConstraints = {
+        @UniqueConstraint(
+            columnNames = { 
+                "name", 
+                "address" , 
+                "city", 
+                "department"
+            }
+        )
 })
 public class StoresEntity implements IStores {
     
