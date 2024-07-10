@@ -10,6 +10,8 @@ import v.o.r.ecommerce.permission.entities.PermissionEntity;
 import v.o.r.ecommerce.permission.repositories.PermissionRepository;
 import v.o.r.ecommerce.roles.entities.RoleEntity;
 import v.o.r.ecommerce.roles.repositories.RoleRepository;
+import v.o.r.ecommerce.stores.entities.StoresEntity;
+import v.o.r.ecommerce.stores.repositories.StoreRepository;
 import v.o.r.ecommerce.users.entities.UserEntity;
 import v.o.r.ecommerce.users.repositories.UserRepository;
 
@@ -24,11 +26,14 @@ public class SeedService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private StoreRepository storeRepository;
 
     public void InitializeData(){
         this.dataPermission();
         this.dataRole();
         this.dataUser();
+        this.dataStore();
     }   
 
     private void dataPermission(){
@@ -162,4 +167,56 @@ public class SeedService {
 
         userRepository.save(userEntity6);
     }
+
+    private void dataStore() {
+        StoresEntity storeEntity1 = new StoresEntity();
+        storeEntity1.setName("storeSmall");
+        storeEntity1.setCity("Cali");
+        storeEntity1.setAddress("Street 01 #20");
+        storeEntity1.setDepartment("Cauca");
+        storeRepository.save(storeEntity1);
+    
+        StoresEntity storeEntity2 = new StoresEntity();
+        storeEntity2.setName("storeMedium");
+        storeEntity2.setCity("Medellin");
+        storeEntity2.setAddress("Street 45 #18");
+        storeEntity2.setDepartment("Antioquia");
+        storeRepository.save(storeEntity2);
+    
+        StoresEntity storeEntity3 = new StoresEntity();
+        storeEntity3.setName("storeLarge");
+        storeEntity3.setCity("Bogota");
+        storeEntity3.setAddress("Street 100 #22");
+        storeEntity3.setDepartment("Cundinamarca");
+        storeRepository.save(storeEntity3);
+    
+        StoresEntity storeEntity4 = new StoresEntity();
+        storeEntity4.setName("storeExtraLarge");
+        storeEntity4.setCity("Barranquilla");
+        storeEntity4.setAddress("Street 32 #14");
+        storeEntity4.setDepartment("Atlantico");
+        storeRepository.save(storeEntity4);
+    
+        StoresEntity storeEntity5 = new StoresEntity();
+        storeEntity5.setName("storePremium");
+        storeEntity5.setCity("Cartagena");
+        storeEntity5.setAddress("Street del Mar #5");
+        storeEntity5.setDepartment("Bolivar");
+        storeRepository.save(storeEntity5);
+    
+        StoresEntity storeEntity6 = new StoresEntity();
+        storeEntity6.setName("storeBasic");
+        storeEntity6.setCity("Santa Marta");
+        storeEntity6.setAddress("Street 50 #10");
+        storeEntity6.setDepartment("Magdalena");
+        storeRepository.save(storeEntity6);
+    
+        StoresEntity storeEntity7 = new StoresEntity();
+        storeEntity7.setName("storeExclusive");
+        storeEntity7.setCity("Pereira");
+        storeEntity7.setAddress("Street Sur #25");
+        storeEntity7.setDepartment("Risaralda");
+        storeRepository.save(storeEntity7);
+    }
+    
 }
