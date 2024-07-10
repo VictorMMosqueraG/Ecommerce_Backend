@@ -10,6 +10,7 @@ This repositorie is for create one shopee f any products, basic one base of the 
 - [Backend Setup and Dependencies](#backend-setup-and-dependencies)
 - [Environment](#environments)
 - [Documentation swagger](#documentation-swagger)
+- [Seed](#seed)
 
 ## Branch Naming Conventions
 
@@ -99,5 +100,13 @@ For this project it is using environments `dev`, `stage` and `prod`, copy a data
 
 ```
 http://localhost:8080/swagger-ui/index.html#/
+
 ```
 
+## Seed
+It is endpoint for create multiple data in all tables on we database
+`NOTE:` not use in  `prod` or `stage`
+```
+post
+http://localhost:8080/api/v1/seed/seed
+```
