@@ -14,6 +14,8 @@ import v.o.r.ecommerce.common.interfaces.stores.IStoreController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import v.o.r.ecommerce.stores.dto.CreateStoreDto;
 import v.o.r.ecommerce.stores.dto.PaginationStoreDto;
+import v.o.r.ecommerce.stores.dto.UpdateStoreDto;
+import v.o.r.ecommerce.stores.entities.StoresEntity;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +31,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 
@@ -107,6 +112,37 @@ public class StoresController implements IStoreController{
             return BaseServiceError.handleException(e);
         }
     }
-    
-    
+
+    @Operation(summary = "Update a store")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200", 
+            description = "store update",
+            content = @Content(mediaType = "application/json")
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Bad request", 
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"BAD_REQUEST\", \"error\": \"Bad request\", \"message\": \"Invalid input data\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "500", 
+            description = "Internal Server Error",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
+        )
+    })
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(
+        @PathVariable Long id,
+        @RequestBody UpdateStoreDto updateStoreDto
+    ) {
+        try {
+            StoresEntity updateStore  =  storesService.update(id, updateStoreDto);
+            return ResponseEntity.status(HttpStatus.OK).body(updateStore);
+        } catch (Exception e) {
+            return BaseServiceError.handleException(e);
+        }        
+    }
 }
