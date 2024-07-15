@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import v.o.r.ecommerce.common.interfaces.stores.IStoresService;
 import v.o.r.ecommerce.stores.dto.CreateStoreDto;
 import v.o.r.ecommerce.stores.dto.PaginationStoreDto;
+import v.o.r.ecommerce.stores.dto.UpdateStoreDto;
 import v.o.r.ecommerce.stores.entities.StoresEntity;
 import v.o.r.ecommerce.stores.repositories.StoreRepository;
 import java.util.function.Predicate;
@@ -25,7 +26,7 @@ import java.util.function.Predicate;
 public class StoresService implements IStoresService {
     
     @Autowired
-    private StoreRepository useStoreRepository;
+    private StoreRepository storeRepository;
 
     public StoresEntity save(CreateStoreDto createStore){
        StoresEntity store = new StoresEntity();
@@ -36,14 +37,14 @@ public class StoresService implements IStoresService {
        store.setDepartment(createStore.department);
        
        
-        return useStoreRepository.save(store);
+        return storeRepository.save(store);
         
     }
 
     public List<Map<String, Object>> find(PaginationStoreDto paginationStoreDto) {
 
         //find all data in the database
-        List<StoresEntity> foundStore = useStoreRepository.findAll();
+        List<StoresEntity> foundStore = storeRepository.findAll();
 
         //Destructuring all pagination
         boolean flatten = paginationStoreDto!= null && paginationStoreDto.isFlatten();
@@ -118,9 +119,31 @@ public class StoresService implements IStoresService {
         return result;
     }
 
+    public StoresEntity update(Long id, UpdateStoreDto updateStoreDto){
+        //find store or throw exception
+        Optional<StoresEntity> foundStore = this.findByIdOrFail(id);
+
+        StoresEntity update = foundStore.get();
+
+        //valid if provide all data or not
+        String name = updateStoreDto.name !=null ? updateStoreDto.name:update.getName();
+        update.setName(name);
+        
+        String address = updateStoreDto.address !=null ? updateStoreDto.address:update.getAddress();
+        update.setAddress(address);
+        
+        String city = updateStoreDto.city !=null ? updateStoreDto.city:update.getCity();
+        update.setCity(city);
+        
+        String department = updateStoreDto.department !=null ? updateStoreDto.department:update.getDepartment();
+        update.setDepartment(department);
+
+        return storeRepository.save(update);
+    }
+
     //NOTE: base methods
-     public Optional<StoresEntity> findById(Long id){
-        return useStoreRepository.findById(id);
+    public Optional<StoresEntity> findById(Long id){
+        return storeRepository.findById(id);
     }
 
     public Optional<StoresEntity> findByIdOrFail(Long id){

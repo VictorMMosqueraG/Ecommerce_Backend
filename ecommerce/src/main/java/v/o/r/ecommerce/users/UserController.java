@@ -141,7 +141,7 @@ public class UserController implements IUserController{
     @Operation(summary = "Update a users")
     @ApiResponses(value = {
         @ApiResponse(
-            responseCode = "201", 
+            responseCode = "200", 
             description = "User update",
             content = @Content(mediaType = "application/json")
         ),
