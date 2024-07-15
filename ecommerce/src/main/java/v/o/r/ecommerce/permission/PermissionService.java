@@ -26,8 +26,21 @@ public class PermissionService implements IPermissionService{
         permissionRepository.save(permission);
         return permission;
     }
+    
+    public Optional<PermissionEntity> findDetail(Long id){
+        return this.findByIdOrFail(id);
+    }
+
+
+    //NOTE: methods bases
+    public Optional<PermissionEntity> findById(Long id){
+        Optional<PermissionEntity> foundPermission = permissionRepository.findById(id);
+        return foundPermission;
+    }
+
     public Optional<PermissionEntity> findByIdOrFail(Long id){
-        Optional<PermissionEntity> foundPermission=id!=null ? this.findById(id):null;
+        Optional<PermissionEntity> foundPermission=id!=null 
+            ? this.findById(id):null;
         if (foundPermission==null || foundPermission.isEmpty()) {
             throw new NoSuchElementException("the Permission with id "+id+ " is not found.");
         }
@@ -35,8 +48,4 @@ public class PermissionService implements IPermissionService{
         return foundPermission;
     }
     
-    public Optional<PermissionEntity> findById(Long id){
-        Optional<PermissionEntity> foundPermission = permissionRepository.findById(id);
-        return foundPermission;
-    }
 }
