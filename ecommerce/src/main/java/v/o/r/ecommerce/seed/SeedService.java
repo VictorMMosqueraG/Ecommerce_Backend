@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import v.o.r.ecommerce.permission.entities.PermissionEntity;
 import v.o.r.ecommerce.permission.repositories.PermissionRepository;
+import v.o.r.ecommerce.persons.entities.PersonEntity;
+import v.o.r.ecommerce.persons.repositories.PersonRepository;
 import v.o.r.ecommerce.roles.entities.RoleEntity;
 import v.o.r.ecommerce.roles.repositories.RoleRepository;
 import v.o.r.ecommerce.stores.entities.StoresEntity;
@@ -29,11 +31,15 @@ public class SeedService {
     @Autowired
     private StoreRepository storeRepository;
 
+    @Autowired 
+    private PersonRepository personRepository;
+
     public void InitializeData(){
         this.dataPermission();
         this.dataRole();
         this.dataUser();
         this.dataStore();
+        this.dataPerson();
     }   
 
     private void dataPermission(){
@@ -219,4 +225,84 @@ public class SeedService {
         storeRepository.save(storeEntity7);
     }
     
+    private void dataPerson(){
+        List<Long> userId1 = Arrays.asList(1L);
+        List<UserEntity> userEntity1 = userRepository.findAllById(userId1);
+        PersonEntity personEntity1 = new PersonEntity();
+
+        personEntity1.setFirstName("victor");
+        personEntity1.setLastName("mosquera");
+        personEntity1.setMethodOfPay("cash");
+        personEntity1.setPhoneNumber("3207775152");
+        personEntity1.setAddress("cr 20 #20-40");
+        personEntity1.setCity("cali");
+        personEntity1.setDepartment("cauca");
+        personEntity1.setUser(userEntity1.get(0));
+        personRepository.save(personEntity1);
+
+        List<Long> userId2 = Arrays.asList(2L);
+        List<UserEntity> userEntity2 = userRepository.findAllById(userId2);
+        PersonEntity personEntity2 = new PersonEntity();
+        personEntity2.setFirstName("ana");
+        personEntity2.setLastName("garcia");
+        personEntity2.setMethodOfPay("credit card");
+        personEntity2.setPhoneNumber("3101234567");
+        personEntity2.setAddress("av 15 #10-30");
+        personEntity2.setCity("bogota");
+        personEntity2.setDepartment("bogota");
+        personEntity2.setUser(userEntity2.get(0));
+        personRepository.save(personEntity2);
+    
+        List<Long> userId3 = Arrays.asList(3L);
+        List<UserEntity> userEntity3 = userRepository.findAllById(userId3);
+        PersonEntity personEntity3 = new PersonEntity();
+        personEntity3.setFirstName("luis");
+        personEntity3.setLastName("fernandez");
+        personEntity3.setMethodOfPay("debit card");
+        personEntity3.setPhoneNumber("3123456789");
+        personEntity3.setAddress("cl 50 #60-70");
+        personEntity3.setCity("medellin");
+        personEntity3.setDepartment("antioquia");
+        personEntity3.setUser(userEntity3.get(0));
+        personRepository.save(personEntity3);
+
+        List<Long> userId4 = Arrays.asList(4L);
+        List<UserEntity> userEntity4 = userRepository.findAllById(userId4);
+        PersonEntity personEntity4 = new PersonEntity();
+        personEntity4.setFirstName("maria");
+        personEntity4.setLastName("lopez");
+        personEntity4.setMethodOfPay("paypal");
+        personEntity4.setPhoneNumber("3159876543");
+        personEntity4.setAddress("cl 30 #40-50");
+        personEntity4.setCity("barranquilla");
+        personEntity4.setDepartment("atlantico");
+        personEntity4.setUser(userEntity4.get(0));
+        personRepository.save(personEntity4);
+
+        List<Long> userId5 = Arrays.asList(5L);
+        List<UserEntity> userEntity5 = userRepository.findAllById(userId5);
+        PersonEntity personEntity5 = new PersonEntity();
+        personEntity5.setFirstName("carlos");
+        personEntity5.setLastName("martinez");
+        personEntity5.setMethodOfPay("bank transfer");
+        personEntity5.setPhoneNumber("3176543210");
+        personEntity5.setAddress("av 5 #6-7");
+        personEntity5.setCity("cartagena");
+        personEntity5.setDepartment("bolivar");
+        personEntity5.setUser(userEntity5.get(0));
+        personRepository.save(personEntity5);
+
+        List<Long> userId6 = Arrays.asList(6L);
+        List<UserEntity> userEntity6 = userRepository.findAllById(userId6);
+        PersonEntity personEntity6 = new PersonEntity();
+        personEntity6.setFirstName("andrea");
+        personEntity6.setLastName("rodriguez");
+        personEntity6.setMethodOfPay("cash");
+        personEntity6.setPhoneNumber("3181239876");
+        personEntity6.setAddress("cl 25 #30-40");
+        personEntity6.setCity("cucuta");
+        personEntity6.setDepartment("santander");
+        personEntity6.setUser(userEntity6.get(0));
+        personRepository.save(personEntity6);
+    }
 }
