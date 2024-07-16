@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -119,5 +121,27 @@ public class PersonService implements IPersonService{
         List<Map<String, Object>> resultList = new ArrayList<>();
         resultList.add(response);
         return resultList;        
+    }
+
+    public Optional<PersonEntity> findDetail(Long id){
+        return this.findByIdOrFail(id);
+    }
+
+
+    //NOTE: methods bases
+    Optional<PersonEntity> findById(Long id){
+        Optional<PersonEntity> foundPerson = this.personRepository.findById(id);
+        return foundPerson;
+    }
+
+    Optional<PersonEntity> findByIdOrFail(Long id){
+        Optional<PersonEntity> foundPerson = id!=null ?
+            this.findById(id):null;
+
+        if(foundPerson==null || foundPerson.isEmpty()){
+            throw new NoSuchElementException("Person with id " + id + " not found.");
+        }    
+
+        return foundPerson;
     }
 }
