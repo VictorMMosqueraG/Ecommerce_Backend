@@ -11,8 +11,8 @@ import v.o.r.ecommerce.users.dto.PaginationUserDto;
 import v.o.r.ecommerce.users.dto.UpdateUserDto;
 
 public interface IUserController {
-    public ResponseEntity<?> save(CreateUserDto createUser);
-
+    public ResponseEntity<?> saveUser(CreateUserDto createUser);
+    public ResponseEntity<?> saveAdmin(CreateUserDto createUser);
     public ResponseEntity<?> find(
         @ParameterObject 
         @ModelAttribute 

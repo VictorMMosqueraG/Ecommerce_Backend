@@ -8,6 +8,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,7 +64,8 @@ public class RoleController implements IRoleController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-    @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('Role.write.all','Role.write')")
+    @PostMapping
     public ResponseEntity<?> save (@RequestBody CreateRoleDto createRoleDto){
         try {
             roleService.save(createRoleDto);
@@ -95,7 +97,8 @@ public class RoleController implements IRoleController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/find")
+    @PreAuthorize("hasAuthority('Role.read')")
+    @GetMapping
     public ResponseEntity<?> find (@ParameterObject @ModelAttribute PaginationRoleDto paginationRoleDto) {
         try {
             List<Map<String, Object>> foundRole = roleService.find(paginationRoleDto);
@@ -127,7 +130,8 @@ public class RoleController implements IRoleController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/findDetail/{id}")
+    @PreAuthorize("hasAuthority('Role.read.all')")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findDetail(@PathVariable Long id) {
         try {
             Optional<RoleEntity> foundRole = roleService.findDetail(id);

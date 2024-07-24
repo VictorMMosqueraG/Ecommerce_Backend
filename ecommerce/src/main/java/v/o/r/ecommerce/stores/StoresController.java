@@ -8,6 +8,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 
 import v.o.r.ecommerce.common.interfaces.stores.IStoreController;
@@ -47,7 +48,7 @@ public class StoresController implements IStoreController{
     @Autowired
     private StoresService storesService;
 
-     @Operation(summary = "Save a store")
+    @Operation(summary = "Save a store")
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "201", 
@@ -67,7 +68,8 @@ public class StoresController implements IStoreController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-    @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('Store.write.all','Store.write')")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody CreateStoreDto createStore) {
         try {
             storesService.save(createStore);
@@ -99,7 +101,8 @@ public class StoresController implements IStoreController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/find")
+    @PreAuthorize("hasAuthority('Store.read')")
+    @GetMapping
     public ResponseEntity<?> find(
         @ParameterObject 
         @ModelAttribute 
@@ -133,7 +136,8 @@ public class StoresController implements IStoreController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-    @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('Store.write.all')")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(
         @PathVariable Long id,
         @RequestBody UpdateStoreDto updateStoreDto
