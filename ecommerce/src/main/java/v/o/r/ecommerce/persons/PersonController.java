@@ -8,6 +8,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,7 +60,8 @@ public class PersonController implements IPersonController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-    @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('Person.write.all','Person.write')")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody CreatePerson createPerson){
         try {
          personService.save(createPerson);
@@ -90,7 +92,8 @@ public class PersonController implements IPersonController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/find")
+    @PreAuthorize("hasAuthority('Person.read')")
+    @GetMapping
     public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationPersonDto paginationPersonDto){
         try {
             List<Map<String,Object>> foundPerson = personService.find(paginationPersonDto);
@@ -121,7 +124,8 @@ public class PersonController implements IPersonController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/findDetail/{id}")
+    @PreAuthorize("hasAuthority('Person.read.all')")
+    @GetMapping("{id}")
     public ResponseEntity<?> findDetail(@PathVariable Long id) {
         try {
             Optional<PersonEntity> foundPerson = this.personService.findDetail(id);

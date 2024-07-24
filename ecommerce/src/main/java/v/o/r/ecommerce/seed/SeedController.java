@@ -16,7 +16,7 @@ public class SeedController {
     @Autowired
     private SeedService seedService;
 
-    @PostMapping("/seed")
+    @PostMapping
     public ResponseEntity<?> seed(){
         seedService.InitializeData();
         return ResponseEntity.ok("Data initialization successful");

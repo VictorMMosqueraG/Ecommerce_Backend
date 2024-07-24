@@ -8,6 +8,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -65,7 +66,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-   @PostMapping("/register")
+   @PostMapping("/register") //NOTE: this is for user type normal
     public ResponseEntity<?> saveUser( @RequestBody CreateUserDto createUser) {
         try {
             createUser.role=3L;
@@ -96,6 +97,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
+    @PreAuthorize("hasAuthority('User.write.all')")
     @PostMapping("/admin")
     public ResponseEntity<?> saveAdmin( @RequestBody CreateUserDto createUser) {
         try {
@@ -128,6 +130,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
+    @PreAuthorize("hasAuthority('User.read')")
     @GetMapping
     public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationUserDto paginationUserDto) {
         try {
@@ -159,6 +162,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
+    @PreAuthorize("hasAuthority('User.read.all')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findDetail(@PathVariable Long id) {
         try {
@@ -189,6 +193,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
+    @PreAuthorize("hasAuthority('User.write.all')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
         @PathVariable Long id, 

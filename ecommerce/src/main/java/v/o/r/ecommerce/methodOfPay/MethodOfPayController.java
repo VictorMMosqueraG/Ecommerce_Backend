@@ -3,6 +3,7 @@ package v.o.r.ecommerce.methodOfPay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,7 +56,8 @@ public class MethodOfPayController implements IMethodOfPayController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('MethodOfPay.write.all', 'MethodOfPay.write')")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody CreateMethodOfPay createMethodOfPay){
         try {
             methodOfPayService.save(createMethodOfPay);
@@ -72,7 +74,8 @@ public class MethodOfPayController implements IMethodOfPayController{
         @ApiResponse(responseCode = "400", description = "Bad request"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
-    @GetMapping("/find")
+    @PreAuthorize("hasAuthority('MethodOfPay.read')")
+    @GetMapping
     public ResponseEntity<?> find(@ModelAttribute PaginationMethodOfPayDto paginationMethodOfPayDto){
         try {
             return ResponseEntity.status(HttpStatus.OK)

@@ -7,6 +7,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,7 +59,8 @@ public class ProductsController implements IProductsController{
             schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('Product.write.all','Product.write')")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody ProductsDto createProduct){
         try {
             productsService.save(createProduct);
@@ -89,7 +91,8 @@ public class ProductsController implements IProductsController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-    @GetMapping ("/find")
+    @PreAuthorize("hasAuthority('Product.read')")
+    @GetMapping
     public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationProductDto paginationProductDto){
         try {
             List<Map<String,Object>> foundProduct = productsService.find(paginationProductDto);

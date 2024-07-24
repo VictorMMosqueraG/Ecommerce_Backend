@@ -64,6 +64,7 @@ public class RoleController implements IRoleController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
+    @PreAuthorize("hasAnyAuthority('Role.write.all','Role.write')")
     @PostMapping
     public ResponseEntity<?> save (@RequestBody CreateRoleDto createRoleDto){
         try {
@@ -96,7 +97,7 @@ public class RoleController implements IRoleController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @PreAuthorize("hasAnyAuthority('role.read.all','role.read')")
+    @PreAuthorize("hasAuthority('Role.read')")
     @GetMapping
     public ResponseEntity<?> find (@ParameterObject @ModelAttribute PaginationRoleDto paginationRoleDto) {
         try {
@@ -129,7 +130,8 @@ public class RoleController implements IRoleController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/findDetail/{id}")
+    @PreAuthorize("hasAuthority('Role.read.all')")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findDetail(@PathVariable Long id) {
         try {
             Optional<RoleEntity> foundRole = roleService.findDetail(id);

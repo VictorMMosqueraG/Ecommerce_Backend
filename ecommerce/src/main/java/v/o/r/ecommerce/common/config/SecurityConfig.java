@@ -38,6 +38,7 @@ public class SecurityConfig {
         //this endpoint is for provide request without validate
         return http.authorizeHttpRequests((auth) -> auth
         .requestMatchers("api/v1/user/register").permitAll()//FIX: must use env for api/v1
+        //.requestMatchers("api/v1/seed").permitAll()//NOTE: use only for first time start project then comments this
         .anyRequest().authenticated())
         
         //NOTE: call class

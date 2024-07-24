@@ -3,6 +3,7 @@ package v.o.r.ecommerce.inventories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,8 +52,8 @@ public class InventoriesController implements IInventoryController{
             schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-
-    @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('Inventory.write.all', 'Inventory.write')")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody CreateInventory createInventory){
         try {
             inventoriesService.save(createInventory);
