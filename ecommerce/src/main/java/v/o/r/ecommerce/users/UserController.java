@@ -65,8 +65,39 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-   @PostMapping("/save")
-    public ResponseEntity<?> save( @RequestBody CreateUserDto createUser) {
+   @PostMapping("/register")
+    public ResponseEntity<?> saveUser( @RequestBody CreateUserDto createUser) {
+        try {
+            createUser.role=3L;
+            userService.save(createUser);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+             return BaseServiceError.handleException(e);
+        }
+    }
+
+    @Operation(summary = "Save a user admin")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "201", 
+            description = "User created",
+            content = @Content(mediaType = "application/json")
+        ),
+        @ApiResponse(
+            responseCode = "400", 
+            description = "Bad request", 
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"BAD_REQUEST\", \"error\": \"Bad request\", \"message\": \"Invalid input data\" }"))
+        ),
+        @ApiResponse(
+            responseCode = "500", 
+            description = "Internal Server Error",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
+        )
+    })
+    @PostMapping("/admin")
+    public ResponseEntity<?> saveAdmin( @RequestBody CreateUserDto createUser) {
         try {
             userService.save(createUser);
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -97,7 +128,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/find")
+    @GetMapping
     public ResponseEntity<?> find(@ParameterObject @ModelAttribute PaginationUserDto paginationUserDto) {
         try {
             List<Map<String, Object>> foundUser = userService.find(paginationUserDto);
@@ -128,7 +159,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))    
         )
     })
-    @GetMapping("/findDetail/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findDetail(@PathVariable Long id) {
         try {
             Optional<UserEntity> foundUser = userService.findDetail(id);
@@ -158,7 +189,7 @@ public class UserController implements IUserController{
                 schema = @Schema(example = "{\"code\": \"UNEXPECTED_ERROR\", \"error\": \"Internal Server Error\", \"message\": \"Unexpected Error\" }"))
         )
     })
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(
         @PathVariable Long id, 
         @RequestBody UpdateUserDto updateUserDto 

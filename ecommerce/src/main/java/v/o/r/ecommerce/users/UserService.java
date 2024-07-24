@@ -1,10 +1,10 @@
 package v.o.r.ecommerce.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import v.o.r.ecommerce.common.interfaces.users.IUserService;
-import v.o.r.ecommerce.common.utils.HasMap;
 import v.o.r.ecommerce.roles.RoleService;
 import v.o.r.ecommerce.roles.entities.RoleEntity;
 import v.o.r.ecommerce.users.dto.CreateUserDto;
@@ -30,7 +30,7 @@ public class UserService implements IUserService{
     private UserRepository userRepository;
 
     @Autowired
-    private HasMap hasMap;
+    private PasswordEncoder hasMap;
 
     @Autowired
     private RoleService roleService;
@@ -40,7 +40,7 @@ public class UserService implements IUserService{
 
         //encode of the password
         if(createUser.password!=null && !createUser.password.isBlank()){
-            String encodePassword=hasMap.encodePassword(createUser.password);
+            String encodePassword=hasMap.encode(createUser.password);
             user.setPassword(encodePassword);
         }else{
             user.setPassword(createUser.password);
@@ -137,7 +137,7 @@ public class UserService implements IUserService{
 
         //valid if provide password and encode
         if(updateUserDto.password!=null && !updateUserDto.password.isBlank()){
-            String encodePassword=hasMap.encodePassword(updateUserDto.password);
+            String encodePassword=hasMap.encode(updateUserDto.password);
             update.setPassword(encodePassword);//send data
         }
 
