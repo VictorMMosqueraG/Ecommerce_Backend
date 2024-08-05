@@ -7,6 +7,7 @@ import java.util.Optional;
 import v.o.r.ecommerce.role.mockData.RoleMockData;
 import v.o.r.ecommerce.roles.entities.RoleEntity;
 import v.o.r.ecommerce.users.dto.CreateUserDto;
+import v.o.r.ecommerce.users.dto.UpdateUserDto;
 import v.o.r.ecommerce.users.entities.UserEntity;
 
 public class userMockData {
@@ -20,7 +21,11 @@ public class userMockData {
         return dto;
     }
 
-    public static UserEntity createUserEntity(CreateUserDto dto, String encodedPassword, RoleEntity role) {
+    public static UserEntity createUserEntity(
+        CreateUserDto dto, 
+        String encodedPassword, 
+        RoleEntity role
+    ) {
         UserEntity user = new UserEntity();
         user.setEmail(dto.email);
         user.setPassword(encodedPassword);
@@ -62,5 +67,26 @@ public class userMockData {
         user.setRole(RoleMockData.createRoleEntity(1L));
 
         return Optional.of(user);
+    }
+
+    //NOTE: update user
+    public static UpdateUserDto updateUserDto() {
+        UpdateUserDto dto = new UpdateUserDto();
+        dto.email = "test@gmail.com";
+        dto.password = "encodedPassword";
+        dto.role = 1L;
+        return dto;
+    }
+
+    public static UserEntity updateUserEntity(
+        UpdateUserDto dto, 
+        String encodedPassword, 
+        RoleEntity role
+    ){
+        UserEntity user = new UserEntity();
+        user.setEmail(dto.email);
+        user.setPassword(encodedPassword);
+        user.setRole(role);
+        return user;
     }
 }

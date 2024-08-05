@@ -25,6 +25,7 @@ import v.o.r.ecommerce.user.mockData.userMockData;
 import v.o.r.ecommerce.users.UserService;
 import v.o.r.ecommerce.users.dto.CreateUserDto;
 import v.o.r.ecommerce.users.dto.PaginationUserDto;
+import v.o.r.ecommerce.users.dto.UpdateUserDto;
 import v.o.r.ecommerce.users.entities.UserEntity;
 import v.o.r.ecommerce.users.repositories.UserRepository;
 
@@ -350,5 +351,142 @@ public class UserServiceTest {
 
         //Verify
         verify(userRepository).findById(id);
+    }
+
+    //NOTE: Update Test
+    @Test
+    public void testUpdateUserSuccessfully(){
+        //Initialize variable
+        Long id = 1L;
+        UpdateUserDto updateUserDto = userMockData.updateUserDto();
+        RoleEntity roleUser = RoleMockData.createRoleEntity(1L);
+        UserEntity user = userMockData.updateUserEntity(updateUserDto, updateUserDto.password, roleUser);
+
+        //Configure method when called
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(hasMap.encode(updateUserDto.password)).thenReturn("encodedPassword");
+        when(roleService.findRoleByIdOrFail(updateUserDto.role)).thenReturn(Optional.of(roleUser));
+        when(userRepository.save(any(UserEntity.class))).thenReturn(user);
+
+        //Call method service
+        UserEntity result = userService.update(id, updateUserDto);
+
+        //Asserts
+        assertEquals(updateUserDto.email, result.getEmail());
+        assertEquals(updateUserDto.password, result.getPassword());
+        assertEquals(updateUserDto.role, result.getRole().getId());
+
+        //Verify
+        verify(userRepository).findById(id);
+        verify(hasMap).encode(updateUserDto.password);
+        verify(roleService).findRoleByIdOrFail(updateUserDto.role);
+        verify(userRepository).save(any(UserEntity.class));
+    }
+
+    @Test
+    public void testUpdateUserWithEmail(){
+        //Initialize variable
+        Long id = 1L;
+        UpdateUserDto updateUserDto = userMockData.updateUserDto();
+        updateUserDto.password=null;
+        updateUserDto.role=null;
+
+        UserEntity user = userMockData.updateUserEntity(updateUserDto, null, null);
+
+        //Configure method when called
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(hasMap.encode(updateUserDto.password)).thenReturn(null);
+        when(roleService.findRoleByIdOrFail(updateUserDto.role)).thenReturn(null);
+        when(userRepository.save(any(UserEntity.class))).thenReturn(user);
+
+        //Call method service
+        UserEntity result = userService.update(id, updateUserDto);
+
+        //Asserts
+        assertEquals(updateUserDto.email, result.getEmail());
+        assertEquals(updateUserDto.password, result.getPassword());
+        assertEquals(updateUserDto.role, result.getRole());
+
+        //Verify
+        verify(userRepository).findById(id);
+        verify(userRepository).save(any(UserEntity.class));
+    }
+
+    @Test
+    public void testUpdateUserWithPassword(){
+        //Initialize variable
+        Long id = 1L;
+        UpdateUserDto updateUserDto = userMockData.updateUserDto();
+        updateUserDto.email=null;
+        updateUserDto.role=null;
+
+        UserEntity user = userMockData.updateUserEntity(updateUserDto, updateUserDto.password, null);
+
+        //Configure method when called
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(hasMap.encode(updateUserDto.password)).thenReturn("encodedPassword");
+        when(roleService.findRoleByIdOrFail(updateUserDto.role)).thenReturn(null);
+        when(userRepository.save(any(UserEntity.class))).thenReturn(user);
+
+        //Call method service
+        UserEntity result = userService.update(id, updateUserDto);
+
+        //Asserts
+        assertEquals(updateUserDto.email, result.getEmail());
+        assertEquals(updateUserDto.password, result.getPassword());
+        assertEquals(updateUserDto.role, result.getRole());
+
+        //Verify
+        verify(userRepository).findById(id);
+        verify(userRepository).save(any(UserEntity.class));
+    }
+
+    @Test
+    public void testUpdateUserWithRole(){
+        //Initialize variable
+        Long id = 1L;
+        UpdateUserDto updateUserDto = userMockData.updateUserDto();
+        updateUserDto.email=null;
+        updateUserDto.password=null;
+
+        RoleEntity roleUser = RoleMockData.createRoleEntity(1L);
+        UserEntity user = userMockData.updateUserEntity(updateUserDto, null, roleUser);
+
+        //Configure method when called
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(hasMap.encode(updateUserDto.password)).thenReturn(null);
+        when(roleService.findRoleByIdOrFail(updateUserDto.role)).thenReturn(Optional.of(roleUser));
+        when(userRepository.save(any(UserEntity.class))).thenReturn(user);
+
+        //Call method service
+        UserEntity result = userService.update(id, updateUserDto);
+
+        //Asserts
+        assertEquals(updateUserDto.email, result.getEmail());
+        assertEquals(updateUserDto.password, result.getPassword());
+        assertEquals(updateUserDto.role, result.getRole().getId());
+
+        //Verify
+        verify(userRepository).findById(id);
+        verify(roleService).findRoleByIdOrFail(updateUserDto.role);
+        verify(userRepository).save(any(UserEntity.class));
+    }
+
+    @Test
+    public void testUPdateUserNotFoundId(){
+        //Initialize
+        Long id = 1L;
+        UpdateUserDto updateUserDto = userMockData.updateUserDto();
+       
+        //Configure method when called
+        when(userRepository.findById(id))
+            .thenThrow(
+                new NoSuchElementException("User with id " + id + " not found.")
+            );
+            
+        //Assert
+        assertThrows(NoSuchElementException.class, 
+            () -> userService.update(id,updateUserDto)
+        );
     }
 }
