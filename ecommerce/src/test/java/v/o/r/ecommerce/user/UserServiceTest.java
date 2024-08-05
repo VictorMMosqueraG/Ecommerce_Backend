@@ -310,4 +310,45 @@ public class UserServiceTest {
         //Verify
         verify(userRepository).findAll();
     }
+
+    //NOTE: Find detail Test
+    @Test
+    public void testFindDetailUser(){
+        //Initialize variable
+        Long id = 1L;
+        Optional<UserEntity> user = userMockData.findUserDetail();
+
+        //Configure method when called
+        when(userRepository.findById(id)).thenReturn(user);
+
+        //Call method service
+        Optional<UserEntity> result = userService.findDetail(id);
+
+        //Assert
+        assertEquals(user, result);
+
+        //Verify
+        verify(userRepository).findById(id);
+    }
+
+    @Test
+    public void testFindDetailUserNotFound(){
+        //Initialize variable
+        Long id = 1L;
+ 
+        //Configure method when called
+        when(userRepository.findById(id))
+            .thenThrow(
+                new NoSuchElementException("User with id " + id + " not found.")
+            );
+
+         //Assert
+        assertThrows(
+            NoSuchElementException.class, 
+            () -> userService.findDetail(id)
+        );
+
+        //Verify
+        verify(userRepository).findById(id);
+    }
 }

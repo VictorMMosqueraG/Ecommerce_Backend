@@ -2,6 +2,7 @@ package v.o.r.ecommerce.user.mockData;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import v.o.r.ecommerce.role.mockData.RoleMockData;
 import v.o.r.ecommerce.roles.entities.RoleEntity;
@@ -51,5 +52,15 @@ public class userMockData {
         List<UserEntity> users = Arrays.asList(user1);
 
         return users;
+    }
+
+    //NOTE: find detail user
+    public static Optional<UserEntity> findUserDetail(){
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+        user.setEmail("test@example.com");
+        user.setRole(RoleMockData.createRoleEntity(1L));
+
+        return Optional.of(user);
     }
 }
