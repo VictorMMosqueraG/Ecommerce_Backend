@@ -32,7 +32,7 @@ public class RoleService implements IRoleService {
     @Autowired
     private PermissionService permissionService;
 
-    public void save(CreateRoleDto createRoleDto){
+    public RoleEntity save(CreateRoleDto createRoleDto){
         RoleEntity role = new RoleEntity();
 
         role.setName(createRoleDto.name);
@@ -47,7 +47,7 @@ public class RoleService implements IRoleService {
    
         role.setPermission(findPermissions);
 
-        roleRepository.save(role);
+        return roleRepository.save(role);
     }
 
     public List<Map<String,Object>> find(PaginationRoleDto paginationRoleDto){

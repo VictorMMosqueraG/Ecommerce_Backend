@@ -16,7 +16,7 @@ public class PaginationUserDto implements IPaginationUser{
     private int offset;
 
     @Parameter(description = "Sort order of the results ,example = asc")
-    private String sortOrder;
+    private String sortOrder;//COMEBACK: change this for enumSortORder
 
     @Parameter(description = "Filter users by email address, example = email@gmail.com")
     private String email;
