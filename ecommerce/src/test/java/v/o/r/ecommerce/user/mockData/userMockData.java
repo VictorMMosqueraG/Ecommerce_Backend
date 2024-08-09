@@ -49,11 +49,11 @@ public class userMockData {
         return users;
     }
 
+    //FIX: this test is invalid, flatten is only id and name
     public static List<UserEntity> listUserFlatten(){
         UserEntity user1 = new UserEntity();
         user1.setId(1L);
         user1.setEmail("test@example.com");
-        user1.setRole(RoleMockData.createRoleEntity(1L));
         List<UserEntity> users = Arrays.asList(user1);
 
         return users;

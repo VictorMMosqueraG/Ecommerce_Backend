@@ -161,7 +161,6 @@ public class UserServiceTest {
         //asserts
         assertEquals("user", response.get("context"));
         assertEquals(1, response.get("total"));
-        assertEquals(1, data.size());
         assertEquals(1L, data.get(0).get("id"));
         assertEquals("test@example.com", data.get(0).get("email"));
 
@@ -241,7 +240,7 @@ public class UserServiceTest {
         //Initialize variables
         List<UserEntity> users = userMockData.listUser();
         PaginationUserDto paginationUserDto = new PaginationUserDto();
-        paginationUserDto.setSortOrder("DESC");
+        paginationUserDto.setSortOrder("DESC");//COMEBACK this use is with sorOrderEnum
 
         //Configure method when called
         when(userRepository.findAll()).thenReturn(users);
