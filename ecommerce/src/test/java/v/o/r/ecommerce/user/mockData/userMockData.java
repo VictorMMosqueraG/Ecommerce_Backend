@@ -49,7 +49,6 @@ public class userMockData {
         return users;
     }
 
-    //FIX: this test is invalid, flatten is only id and name
     public static List<UserEntity> listUserFlatten(){
         UserEntity user1 = new UserEntity();
         user1.setId(1L);
