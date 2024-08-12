@@ -2,7 +2,7 @@ package v.o.r.ecommerce.permission.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public class CreatePermission {
+public class CreatePermissionDto {
     @Schema(example = "Products.write.all")
     public String name;
 

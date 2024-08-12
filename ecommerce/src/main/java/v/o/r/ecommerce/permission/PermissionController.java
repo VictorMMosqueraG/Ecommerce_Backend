@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import v.o.r.ecommerce.common.interfaces.permission.IPermissionController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
-import v.o.r.ecommerce.permission.dto.CreatePermission;
+import v.o.r.ecommerce.permission.dto.CreatePermissionDto;
 import v.o.r.ecommerce.permission.entities.PermissionEntity;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +57,7 @@ public class PermissionController implements IPermissionController {
     })
     @PreAuthorize("hasAnyAuthority('Permission.write.all', 'Permission.write')")
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody CreatePermission createPermission){
+    public ResponseEntity<?> save(@RequestBody CreatePermissionDto createPermission){
         try {
          permissionService.save(createPermission);
             return ResponseEntity.status(HttpStatus.CREATED).build();
