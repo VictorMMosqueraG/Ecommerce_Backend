@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import v.o.r.ecommerce.common.interfaces.references.IReferenceService;
-import v.o.r.ecommerce.references.dto.createReferenceDTO;
+import v.o.r.ecommerce.references.dto.CreateReferenceDto;
 import v.o.r.ecommerce.references.entities.ReferenceEntity;
 import v.o.r.ecommerce.references.repositories.ReferenceRepository;
 
@@ -19,7 +19,7 @@ public class ReferenceService implements IReferenceService {
     private ReferenceRepository referenceRepository;
 
 
-    public ReferenceEntity save(createReferenceDTO createReference){
+    public ReferenceEntity save(CreateReferenceDto createReference){
         ReferenceEntity entity = new ReferenceEntity();
 
    

@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import v.o.r.ecommerce.common.interfaces.references.IReferenceController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
-import v.o.r.ecommerce.references.dto.createReferenceDTO;
+import v.o.r.ecommerce.references.dto.CreateReferenceDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,7 +54,7 @@ public class ReferenceController implements IReferenceController {
     })
     @PreAuthorize("hasAnyAuthority('Reference.write.all','Reference.write')")
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody createReferenceDTO createReference) {
+    public ResponseEntity<?> save(@RequestBody CreateReferenceDto createReference) {
        try {
             useService.save(createReference);
            return ResponseEntity.status(HttpStatus.CREATED).build();
