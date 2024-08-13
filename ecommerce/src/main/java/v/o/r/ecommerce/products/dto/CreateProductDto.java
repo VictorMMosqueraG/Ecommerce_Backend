@@ -5,7 +5,7 @@ import java.util.List;
 import io.swagger.v3.oas.annotations.media.Schema;
 import v.o.r.ecommerce.common.enums.EnumUtils;
 
-public class ProductsDto {
+public class CreateProductDto {
 
     @Schema(example = "Shorts")
     public String name;

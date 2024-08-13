@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import v.o.r.ecommerce.categories.dto.CategoryDto;
+import v.o.r.ecommerce.categories.dto.CreateCategoryDto;
 import v.o.r.ecommerce.categories.entities.CategoryEntity;
 import v.o.r.ecommerce.categories.repositories.CategoryRepository;
 import v.o.r.ecommerce.common.interfaces.categories.ICategoryService;
@@ -16,7 +16,7 @@ public class CategoriesService implements ICategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public CategoryEntity save(CategoryDto createCategory){
+    public CategoryEntity save(CreateCategoryDto createCategory){
         CategoryEntity category = new CategoryEntity();
         
         category.setName(createCategory.name);
