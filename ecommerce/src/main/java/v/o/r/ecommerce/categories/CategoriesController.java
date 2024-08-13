@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import v.o.r.ecommerce.categories.dto.CategoryDto;
+import v.o.r.ecommerce.categories.dto.CreateCategoryDto;
 import v.o.r.ecommerce.common.interfaces.categories.ICategoryController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +53,7 @@ public class CategoriesController implements ICategoryController {
     })
     @PreAuthorize("hasAnyAuthority('Category.write.all', 'Category.write')")
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody CategoryDto createCategory) {
+    public ResponseEntity<?> save(@RequestBody CreateCategoryDto createCategory) {
         try {
             useService.save(createCategory);
             return ResponseEntity.status(HttpStatus.CREATED).build();

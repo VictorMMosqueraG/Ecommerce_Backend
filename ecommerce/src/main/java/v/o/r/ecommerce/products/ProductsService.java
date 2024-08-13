@@ -19,7 +19,7 @@ import v.o.r.ecommerce.categories.CategoriesService;
 import v.o.r.ecommerce.categories.entities.CategoryEntity;
 import v.o.r.ecommerce.common.interfaces.products.IProductsService;
 import v.o.r.ecommerce.products.dto.PaginationProductDto;
-import v.o.r.ecommerce.products.dto.ProductsDto;
+import v.o.r.ecommerce.products.dto.CreateProductDto;
 import v.o.r.ecommerce.products.entities.ProductsEntity;
 import v.o.r.ecommerce.products.repositories.ProductRepository;
 
@@ -32,7 +32,8 @@ public class ProductsService implements IProductsService {
     @Autowired
     private CategoriesService categoriesService;
 
-    public ProductsEntity save(ProductsDto createProducts) {
+    //COMEBACK: test this and do refactor
+    public ProductsEntity save(CreateProductDto createProducts) {
         ProductsEntity product = new ProductsEntity();
 
         product.setName(createProducts.name);
@@ -43,6 +44,7 @@ public class ProductsService implements IProductsService {
         if (createProducts.categories.isEmpty() || createProducts.categories == null) {
             throw new IllegalArgumentException("Categories can be null or empty");
         }
+
         List<CategoryEntity> categoriesList = new ArrayList<>();
         for (int i = 0; i < createProducts.categories.size(); i++) {
             categoriesList.add(categoriesService.findByIdOrFail(createProducts.categories.get(i)));
@@ -51,7 +53,6 @@ public class ProductsService implements IProductsService {
         product.setCategories(categoriesList);
 
         return productRepository.save(product);
-
     }
 
     public List<Map<String, Object>> find(PaginationProductDto paginationProductDto) {
@@ -62,7 +63,7 @@ public class ProductsService implements IProductsService {
                 ? paginationProductDto.getLimit()
                 : 50;
         int offset = paginationProductDto != null && paginationProductDto.getOffset() != 0
-                ? paginationProductDto.getLimit()
+                ? paginationProductDto.getOffset()
                 : 0;
         String sortOrder = paginationProductDto != null ? paginationProductDto.getSortOrder() : null;
         String name = paginationProductDto != null ? paginationProductDto.getName() : null;
@@ -78,16 +79,11 @@ public class ProductsService implements IProductsService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("context", "products");
             response.put("total", listProduct.size());
-            response.put("date", listProduct.stream()
+            response.put("data", listProduct.stream()
                     .map(product -> {
                         Map<String, Object> productMap = new LinkedHashMap<>();
                         productMap.put("id", product.getId());
                         productMap.put("name", product.getName());
-                        productMap.put("description", product.getDescription());
-                        productMap.put("price", product.getPrice());
-                        productMap.put("categories", product.getCategories().stream()
-                        .map(CategoryEntity::getName)
-                        .collect(Collectors.toList()));
                         return productMap;
                     })
                     .collect(Collectors.toList()));
@@ -113,7 +109,7 @@ public class ProductsService implements IProductsService {
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("context", "products");
         response.put("total", listProduct.size());
-        response.put("date", listProduct.stream()
+        response.put("data", listProduct.stream()
                 .filter(priceFilter.and(categoryFilter).and(nameFind))
                 .map(product -> {
                     Map<String, Object> productMap = new LinkedHashMap<>();
@@ -121,6 +117,7 @@ public class ProductsService implements IProductsService {
                     productMap.put("name", product.getName());
                     productMap.put("description", product.getDescription());
                     productMap.put("price", product.getPrice());
+                    productMap.put("money", product.getMoney());
                     productMap.put("categories", product.getCategories().stream()
                     .map(CategoryEntity::getName)
                     .collect(Collectors.toList()));

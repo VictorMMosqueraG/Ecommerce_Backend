@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import v.o.r.ecommerce.common.interfaces.products.IProductsController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
 import v.o.r.ecommerce.products.dto.PaginationProductDto;
-import v.o.r.ecommerce.products.dto.ProductsDto;
+import v.o.r.ecommerce.products.dto.CreateProductDto;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -61,7 +61,7 @@ public class ProductsController implements IProductsController{
     })
     @PreAuthorize("hasAnyAuthority('Product.write.all','Product.write')")
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody ProductsDto createProduct){
+    public ResponseEntity<?> save(@RequestBody CreateProductDto createProduct){
         try {
             productsService.save(createProduct);
             return ResponseEntity.status(HttpStatus.CREATED).build();

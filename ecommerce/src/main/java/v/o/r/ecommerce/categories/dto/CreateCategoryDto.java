@@ -2,7 +2,7 @@ package v.o.r.ecommerce.categories.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public class CategoryDto {
+public class CreateCategoryDto {
 
     @Schema(example = "Sport")
     public String name;
