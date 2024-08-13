@@ -76,7 +76,7 @@ public class StoresService implements IStoresService {
         }
         
          //logic for sortOrder DESC, this is default ASC
-        Comparator<Map<String, Object>> sort = Comparator.comparing(m -> (String) m.get("email"));
+        Comparator<Map<String, Object>> sort = Comparator.comparing(m -> (String) m.get("name"));
 
         if (sortOrder != null && sortOrder.equalsIgnoreCase("desc")) {
             sort = sort.reversed();
