@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import v.o.r.ecommerce.common.interfaces.inventories.IInventoryService;
-import v.o.r.ecommerce.inventories.dto.CreateInventory;
+import v.o.r.ecommerce.inventories.dto.CreateInventoryDto;
 import v.o.r.ecommerce.inventories.entities.InventoryEntity;
 import v.o.r.ecommerce.inventories.repositories.InventoryRepository;
 import v.o.r.ecommerce.products.ProductsService;
@@ -27,7 +27,7 @@ public class InventoriesService implements IInventoryService{
     @Autowired
     private StoresService storesService;
 
-    public InventoryEntity save(CreateInventory createInventory){
+    public InventoryEntity save(CreateInventoryDto createInventory){
         InventoryEntity inventory = new InventoryEntity();
         inventory.setStocks(createInventory.stocks);
         

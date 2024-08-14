@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import v.o.r.ecommerce.common.interfaces.inventories.IInventoryController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
-import v.o.r.ecommerce.inventories.dto.CreateInventory;
+import v.o.r.ecommerce.inventories.dto.CreateInventoryDto;
 
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,7 +54,7 @@ public class InventoriesController implements IInventoryController{
     })
     @PreAuthorize("hasAnyAuthority('Inventory.write.all', 'Inventory.write')")
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody CreateInventory createInventory){
+    public ResponseEntity<?> save(@RequestBody CreateInventoryDto createInventory){
         try {
             inventoriesService.save(createInventory);
             return ResponseEntity.status(HttpStatus.CREATED).build();
