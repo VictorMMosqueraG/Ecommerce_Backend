@@ -2,7 +2,7 @@ package v.o.r.ecommerce.inventories.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public class CreateInventory {
+public class CreateInventoryDto {
     
     @Schema(example = "25")
     public Integer stocks;

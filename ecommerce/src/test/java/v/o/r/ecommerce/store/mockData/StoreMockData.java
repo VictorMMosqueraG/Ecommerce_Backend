@@ -96,4 +96,16 @@ public class StoreMockData {
 
         return entity;
     }
+
+    //NOTE: method for other class
+    public static StoresEntity storesEntity(){
+        StoresEntity entity = new StoresEntity();
+
+        entity.setName("name");
+        entity.setDepartment("department");
+        entity.setCity("city");
+        entity.setAddress("address");
+
+        return entity;
+    }
 }

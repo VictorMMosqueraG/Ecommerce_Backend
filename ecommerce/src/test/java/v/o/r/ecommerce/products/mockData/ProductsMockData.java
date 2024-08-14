@@ -73,4 +73,18 @@ public class ProductsMockData {
 
         return products;
     }
+
+    //NOTE: method for other class
+    public static ProductsEntity productsEntity(){
+        ProductsEntity entity = new ProductsEntity();
+
+        entity.setId(1L);
+        entity.setName("name1");
+        entity.setDescription("description1");        
+        entity.setCategories(CategoryMockData.createCategoryEntity());
+        entity.setMoney(EnumUtils.COP);
+        entity.setPrice("price1");
+
+        return entity;
+    }
 }
