@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import v.o.r.ecommerce.common.interfaces.methodOfPay.IMethodOfPayController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
-import v.o.r.ecommerce.methodOfPay.dto.CreateMethodOfPay;
+import v.o.r.ecommerce.methodOfPay.dto.CreateMethodOfPayDto;
 import v.o.r.ecommerce.methodOfPay.dto.PaginationMethodOfPayDto;
 import v.o.r.ecommerce.methodOfPay.entities.MethodOfPayEntity;
 
@@ -58,7 +58,7 @@ public class MethodOfPayController implements IMethodOfPayController{
     })
     @PreAuthorize("hasAnyAuthority('MethodOfPay.write.all', 'MethodOfPay.write')")
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody CreateMethodOfPay createMethodOfPay){
+    public ResponseEntity<?> save(@RequestBody CreateMethodOfPayDto createMethodOfPay){
         try {
             methodOfPayService.save(createMethodOfPay);
             return ResponseEntity.status(HttpStatus.CREATED).build();
