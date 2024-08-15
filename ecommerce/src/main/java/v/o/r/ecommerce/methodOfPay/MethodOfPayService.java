@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import v.o.r.ecommerce.common.interfaces.methodOfPay.IMethodOfPayService;
-import v.o.r.ecommerce.methodOfPay.dto.CreateMethodOfPay;
+import v.o.r.ecommerce.methodOfPay.dto.CreateMethodOfPayDto;
 import v.o.r.ecommerce.methodOfPay.dto.PaginationMethodOfPayDto;
 import v.o.r.ecommerce.methodOfPay.entities.MethodOfPayEntity;
 import v.o.r.ecommerce.methodOfPay.repositories.MethodOfPayRepository;
@@ -23,7 +23,7 @@ public class MethodOfPayService implements IMethodOfPayService {
     @Autowired
     private MethodOfPayRepository methodOfPayRepository;
 
-    public MethodOfPayEntity save(CreateMethodOfPay createMethodOfPay){
+    public MethodOfPayEntity save(CreateMethodOfPayDto createMethodOfPay){
         MethodOfPayEntity methodOfPay = new MethodOfPayEntity();
 
         methodOfPay.setName(createMethodOfPay.name);
@@ -68,7 +68,8 @@ public class MethodOfPayService implements IMethodOfPayService {
         }
 
         //Logic for order by ASC or DESC
-        Comparator<MethodOfPayEntity> sort = Comparator.comparing(MethodOfPayEntity::getName);
+        Comparator<Map<String,Object>> sort = 
+            Comparator.comparing(m -> (String) m.get("name"));
 
         if (sortOrder != null && sortOrder.equalsIgnoreCase("desc")) {
             sort = sort.reversed();
@@ -84,6 +85,14 @@ public class MethodOfPayService implements IMethodOfPayService {
         response.put("total", foundMethodOfPay.size());
         response.put("data", foundMethodOfPay.stream()
             .filter(nameFilter)
+            .map(methodOfPay->{
+                Map<String,Object> map = new LinkedHashMap<>();
+                map.put("id", methodOfPay.getId());
+                map.put("name", methodOfPay.getName());
+                map.put("description", methodOfPay.getDescription());
+
+                return map;
+            })
             .sorted(sort)
             .limit(limit)
             .skip(offset)
