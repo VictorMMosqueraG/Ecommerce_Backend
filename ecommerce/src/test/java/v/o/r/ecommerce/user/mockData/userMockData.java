@@ -88,4 +88,15 @@ public class userMockData {
         user.setRole(role);
         return user;
     }
+
+    //NOTE: methods for other class
+    public static UserEntity userEntity(){
+        UserEntity entity = new UserEntity();
+        entity.setId(1L);
+        entity.setEmail("email");
+        entity.setPassword("password");
+        entity.setRole(RoleMockData.createRoleEntity(1L));        
+
+        return entity;
+    }
 }
