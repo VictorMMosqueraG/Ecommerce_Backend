@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import v.o.r.ecommerce.common.interfaces.persons.IPersonService;
-import v.o.r.ecommerce.persons.dto.CreatePerson;
+import v.o.r.ecommerce.persons.dto.CreatePersonDto;
 import v.o.r.ecommerce.persons.dto.PaginationPersonDto;
 import v.o.r.ecommerce.persons.entities.PersonEntity;
 import v.o.r.ecommerce.persons.repositories.PersonRepository;
@@ -31,7 +31,7 @@ public class PersonService implements IPersonService{
     @Autowired
     private UserService userService;
 
-    public PersonEntity save(CreatePerson createPerson){
+    public PersonEntity save(CreatePersonDto createPerson){
         PersonEntity person = new PersonEntity();
 
         person.setFirstName(createPerson.firstName);
@@ -64,9 +64,9 @@ public class PersonService implements IPersonService{
             }
 
             Map<String,Object> response = new LinkedHashMap<>();
-            response.put("context","Person");
+            response.put("context","person");
             response.put("total", foundPerson.size());
-            response.put("date", foundPerson.stream()
+            response.put("data", foundPerson.stream()
                 .map(person ->{
                     Map<String,Object> personMap = new LinkedHashMap<>();
                     personMap.put("id", person.getId());

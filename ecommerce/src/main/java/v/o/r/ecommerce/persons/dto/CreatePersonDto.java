@@ -2,7 +2,7 @@ package v.o.r.ecommerce.persons.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public class CreatePerson {
+public class CreatePersonDto {
     @Schema(example = "Victor")
     public String firstName;
 

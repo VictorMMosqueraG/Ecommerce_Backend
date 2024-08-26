@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import v.o.r.ecommerce.common.interfaces.persons.IPersonController;
 import v.o.r.ecommerce.common.service.BaseServiceError;
-import v.o.r.ecommerce.persons.dto.CreatePerson;
+import v.o.r.ecommerce.persons.dto.CreatePersonDto;
 import v.o.r.ecommerce.persons.dto.PaginationPersonDto;
 import v.o.r.ecommerce.persons.entities.PersonEntity;
 
@@ -62,7 +62,7 @@ public class PersonController implements IPersonController{
     })
     @PreAuthorize("hasAnyAuthority('Person.write.all','Person.write')")
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody CreatePerson createPerson){
+    public ResponseEntity<?> save(@RequestBody CreatePersonDto createPerson){
         try {
          personService.save(createPerson);
             return ResponseEntity.status(HttpStatus.CREATED).build();
