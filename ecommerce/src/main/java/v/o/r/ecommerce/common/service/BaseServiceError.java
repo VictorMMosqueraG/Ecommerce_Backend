@@ -87,6 +87,7 @@ public class BaseServiceError {
         return ResponseError("Unexpected Error", 500, CodeError.INTERNAL_SERVER_ERROR);
     }
 
+    
     //NOTE: this method is for return error with format Json
     public static ResponseEntity<?> ResponseError(String message, Integer status, CodeError code) {
         Map<String, Object> errorMap = new HashMap<>();
