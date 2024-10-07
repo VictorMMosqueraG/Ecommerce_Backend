@@ -77,7 +77,6 @@ public class StoresController implements IStoreController{
         } catch (Exception e) {
             return BaseServiceError.handleException(e);
         }
-        
     }
 
     @Operation(summary = "Found a user")
