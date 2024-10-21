@@ -1,7 +1,10 @@
 package v.o.r.ecommerce.products.mockData;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import v.o.r.ecommerce.categories.entities.CategoryEntity;
 import v.o.r.ecommerce.category.mockData.CategoryMockData;
@@ -36,6 +39,8 @@ public class ProductsMockData {
 
         return entity;
     }
+
+  
 
     //NOTE: method for list
     public static List<ProductsEntity> listProducts(){
@@ -72,6 +77,24 @@ public class ProductsMockData {
         List<ProductsEntity> products = Arrays.asList(entity1,entity2);
 
         return products;
+    }
+
+    public static List<Map<String, Object>> ExpectedDataListProducts() {
+        List<Map<String, Object>> productList = new ArrayList<>();
+
+        for (ProductsEntity product : listProducts()) {
+            Map<String, Object> productMap = new HashMap<>();
+            productMap.put("id", product.getId());
+            productMap.put("name", product.getName());
+            productMap.put("description", product.getDescription());
+            productMap.put("categories", product.getCategories());
+            productMap.put("money", product.getMoney());
+            productMap.put("price", product.getPrice());
+
+            productList.add(productMap);
+        }
+
+        return productList;
     }
 
     //NOTE: method for other class
