@@ -1,8 +1,11 @@
 package v.o.r.ecommerce.person.mockData;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
 
 import v.o.r.ecommerce.persons.dto.CreatePersonDto;
 import v.o.r.ecommerce.persons.entities.PersonEntity;
@@ -84,6 +87,28 @@ public class PersonMockData {
         entity2.setLastName("lastName2");
 
         return Arrays.asList(entity1,entity2);   
+    }
+
+    public static List<Map<String,Object>> expectedFindPerson(){
+        List<Map<String,Object>> listPerson = new ArrayList<>();
+
+        for(PersonEntity person: personList()){
+            Map<String,Object> personMap = new HashMap<>();
+
+            personMap.put("id", person.getId());
+            personMap.put("firstName", person.getFirstName());
+            personMap.put("lastName", person.getLastName());
+            personMap.put("address", person.getAddress());
+            personMap.put("city", person.getCity());
+            personMap.put("department", person.getDepartment());
+            personMap.put("methodOfPay", person.getMethodOfPay());
+            personMap.put("phoneNumber", person.getPhoneNumber());
+            personMap.put("user", person.getUser());
+
+            listPerson.add(personMap);
+        }
+
+        return listPerson;
     }
 
     //NOTE: method for findDetail
