@@ -2,6 +2,9 @@ package v.o.r.ecommerce.methodOfPay.mockData;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 import v.o.r.ecommerce.methodOfPay.dto.CreateMethodOfPayDto;
 import v.o.r.ecommerce.methodOfPay.entities.MethodOfPayEntity;
@@ -61,5 +64,20 @@ public class MethodOfPayMockData {
         return list;
     }
 
+    public static List<Map<String,Object>> expectedFindMethodOfPay(){
+        List<Map<String,Object>> listMethodPay = new ArrayList<>();
+
+        for(MethodOfPayEntity methodPay:listMethodOfPay()){
+            Map<String,Object> map = new HashMap<>();
+
+            map.put("id", methodPay.getId());
+            map.put("name", methodPay.getName());
+            map.put("description", methodPay.getDescription());
+
+            listMethodPay.add(map);
+        }
+
+        return listMethodPay;
+    }
     
 }
