@@ -36,7 +36,7 @@ Our branch names follow the format:
 - **Feature Branch Example:**
 
   - Branch Name: `FT-OVCOM-38-AZ`
-  - Purpose: Development of a feature related to task OVCOM-38, focusing on the FRD scope, led by the team responsible for AZ.
+  - Purpose: Development of a feature related to task OVCOM-38 led by the team responsible for AZ.
 
 
 By adhering to these branch naming conventions, we enhance clarity and traceability within our development process.
